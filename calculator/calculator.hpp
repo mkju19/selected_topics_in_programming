@@ -6,19 +6,19 @@
 #include <memory>
 #include <algorithm>
 #include <stdexcept>
+#include "terms/term_t.h"
 #include "terms/var_t.h"
 #include "terms/unary_t.h"
-#include "terms/var_t.h"
+
+
 namespace calculator
 {
     /** Type to capture the state of entire calculator (one number per variable): */
     using state_t = std::vector<double>;
-
     /** Forward declarations to get around circular dependencies: */
     struct expr_t;
 
-
-    enum op_t { plus, minus, add, sub, assign } op;
+//    enum op_t { plus, minus, add, sub, assign } op;
 
     class symbol_table_t
     {
@@ -36,6 +36,7 @@ namespace calculator
 
     struct expr_t
     {
+        std::shared_ptr<term_t> term;
         std::unique_ptr<var_t> var;
         std::vector<std::unique_ptr<expr_t>> operands;
         enum op_t op;
@@ -64,49 +65,49 @@ namespace calculator
             operands[1] = std::make_unique<expr_t>(e2);
         }
 
-        enum op_t {plus, minus, assign, add, sub};
+//        enum op_t {plus, minus, assign, add, sub};
 
-        double operator()(state_t& s) const {
-            if (var) {
-                auto& v = *var;
-                switch(op) {
-                    case expr_t::plus: return v(s);
-                    case expr_t::minus: return -v(s);
-                    case expr_t::assign:
-                        if (operands.empty())
-                            throw std::logic_error{"missing expression to evaluate"};
-                        return v(s, *operands[0]);
-                    default:
-                        throw std::logic_error{"unsupported operation over a variable"};
-                }
-            } else {
-                auto& e1 = *operands[0];
-                switch(op) {
-                    case expr_t::plus:
-                        if (operands.empty())
-                            throw std::logic_error{"bug: missing an operand for unary +"};
-                        return e1(s);
-                    case expr_t::minus:
-                        if (operands.empty())
-                            throw std::logic_error{"bug: missing an operand for unary -"};
-                        return -e1(s);
-                    case expr_t::add: {
-                        if (operands.size() != 2)
-                            throw std::logic_error{"bug: expecting two operands for binary +"};
-                        auto &e2 = *operands[1];
-                        return e1(s) + e2(s);
-                    }
-                    case expr_t::sub: {
-                        if (operands.size() != 2)
-                            throw std::logic_error{"bug: expecting two operands for binary -"};
-                        auto &e2 = *operands[1];
-                        return e1(s) - e2(s);
-                    }
-                    default:
-                        throw std::logic_error{"not implemented"};
-                }
-            }
-        }
+        double operator()(state_t& s) const { return term(s)}
+//            if (var) {
+//                auto& v = *var;
+//                switch(op) {
+//                    case expr_t::plus: return v(s);
+//                    case expr_t::minus: return -v(s);
+//                    case expr_t::assign:
+//                        if (operands.empty())
+//                            throw std::logic_error{"missing expression to evaluate"};
+//                        return v(s, *operands[0]);
+//                    default:
+//                        throw std::logic_error{"unsupported operation over a variable"};
+//                }
+//            } else {
+//                auto& e1 = *operands[0];
+//                switch(op) {
+//                    case expr_t::plus:
+//                        if (operands.empty())
+//                            throw std::logic_error{"bug: missing an operand for unary +"};
+//                        return e1(s);
+//                    case expr_t::minus:
+//                        if (operands.empty())
+//                            throw std::logic_error{"bug: missing an operand for unary -"};
+//                        return -e1(s);
+//                    case expr_t::add: {
+//                        if (operands.size() != 2)
+//                            throw std::logic_error{"bug: expecting two operands for binary +"};
+//                        auto &e2 = *operands[1];
+//                        return e1(s) + e2(s);
+//                    }
+//                    case expr_t::sub: {
+//                        if (operands.size() != 2)
+//                            throw std::logic_error{"bug: expecting two operands for binary -"};
+//                        auto &e2 = *operands[1];
+//                        return e1(s) - e2(s);
+//                    }
+//                    default:
+//                        throw std::logic_error{"not implemented"};
+//                }
+//            }
+//        }
     };
 
 

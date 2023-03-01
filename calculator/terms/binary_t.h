@@ -1,8 +1,8 @@
-#include <memory>
-#include "term_t.h"
-
 #ifndef CALCULATOR_BINARY_T_H
 #define CALCULATOR_BINARY_T_H
+
+#include <memory>
+#include "term_t.h"
 
 namespace calculator {
     class binary_t : term_t {

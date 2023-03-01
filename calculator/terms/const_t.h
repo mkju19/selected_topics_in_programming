@@ -1,7 +1,6 @@
-#include "term_t.h"
-
 #ifndef CALCULATOR_CONST_T_H
 #define CALCULATOR_CONST_T_H
+#include "term_t.h"
 
 namespace calculator {
     class const_t : term_t {

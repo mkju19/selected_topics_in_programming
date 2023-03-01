@@ -1,10 +1,11 @@
 
 
-#include <memory>
-#include "term_t.h"
 
 #ifndef CALCULATOR_UNARY_T_H
 #define CALCULATOR_UNARY_T_H
+
+#include "term_t.h"
+#include <memory>
 
 namespace calculator {
     class unary_t : public term_t {

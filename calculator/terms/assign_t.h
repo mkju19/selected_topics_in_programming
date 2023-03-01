@@ -1,9 +1,9 @@
+#ifndef CALCULATOR_ASSIGN_T_H
+#define CALCULATOR_ASSIGN_T_H
+
 #include <memory>
 #include "term_t.h"
 #include "var_t.h"
-
-#ifndef CALCULATOR_ASSIGN_T_H
-#define CALCULATOR_ASSIGN_T_H
 
 namespace calculator {
     class assign_t : term_t {

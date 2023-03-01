@@ -2,22 +2,23 @@
 #define CALCULATOR_VAR_T_H
 
 #include "term_t.h"
-#include "../calculator.hpp"
+#include "assign_t.h"
+//#include "../calculator.hpp"
 
 namespace calculator {
     class var_t : term_t {
         size_t id;
 
-        explicit var_t(const size_t &index) : id(index) {};
     public:
+        explicit var_t(const size_t &index) : id(index) {};
+
         double operator()(state_t &s) const override { return s[id]; }
 
         var_t(const var_t &) = default;
 
-
         friend class assign_t;
 
-        friend class symbol_table_t;
+//        friend class symbol_table_t;
     };
 }
 //    class var_t

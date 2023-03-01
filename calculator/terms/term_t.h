@@ -1,7 +1,7 @@
-#include <vector>
-
 #ifndef CALCULATOR_TERM_T_H
 #define CALCULATOR_TERM_T_H
+
+#include <vector>
 
 namespace calculator {
     struct term_t {
