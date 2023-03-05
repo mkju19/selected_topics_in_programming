@@ -6,7 +6,9 @@
 //#include "../calculator.hpp"
 
 namespace calculator {
-    class var_t : term_t {
+    class assign_t;
+
+    class var_t : public term_t {
         size_t id;
 
     public:
