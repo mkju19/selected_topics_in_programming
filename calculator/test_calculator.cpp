@@ -1,4 +1,5 @@
 #include "calculator.hpp"
+#include "symbol_table_t.h"
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
@@ -70,17 +71,17 @@ TEST_CASE("Calculate expressions lazily")
 
 
     // TODO: implement support for constant expressions
-//    SUBCASE("Constant expressions")
-//    {
-//        CHECK((7 + a)(state) == 9);
-//        CHECK((a - 7)(state) == -5);
-//    }
-//    SUBCASE("Store expression and evaluate lazily")
-//    {
-//        auto expr = (a + b) * c;
-//        auto c_4 = c <<= 4;
-//        CHECK(expr(state) == 0);
-//        CHECK(c_4(state) == 4);
-//        CHECK(expr(state) == 20);
-//    }
+    SUBCASE("Constant expressions")
+    {
+        CHECK((7 + a)(state) == 9);
+        CHECK((a - 7)(state) == -5);
+    }
+    SUBCASE("Store expression and evaluate lazily")
+    {
+        auto expr = (a + b) * c;
+        auto c_4 = c <<= 4;
+        CHECK(expr(state) == 0);
+        CHECK(c_4(state) == 4);
+        CHECK(expr(state) == 20);
+    }
 }
