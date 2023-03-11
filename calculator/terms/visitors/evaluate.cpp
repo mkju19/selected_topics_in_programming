@@ -6,7 +6,7 @@
 #include "../assign_t.h"
 
 void calculator::evaluate::visit(var_t& v) {
-    res = (*state)[v.id];
+    res = state[v.id];
 }
 
 void calculator::evaluate::visit(const_t& c ) {
@@ -67,30 +67,30 @@ void calculator::evaluate::visit(assign_t& a) {
     switch (op) {
         case assign_t::op_t::eq:
             a.term->accept(*this);
-            (*state)[var->id] = res;
+            state[var->id] = res;
             break;
         case assign_t::op_t::add:
             a.term->accept(*this);
-            (*state)[var->id] += res;
-            res = (*state)[var->id];
+            state[var->id] += res;
+            res = state[var->id];
             break;
         case assign_t::op_t::sub:
             a.term->accept(*this);
-            (*state)[var->id] -= res;
-            res = (*state)[var->id];
+            state[var->id] -= res;
+            res = state[var->id];
             break;
         case assign_t::op_t::mul:
             a.term->accept(*this);
-            (*state)[var->id] *= res;
-            res = (*state)[var->id];
+            state[var->id] *= res;
+            res = state[var->id];
             break;
         case assign_t::op_t::div:
             a.term->accept(*this);
             if (res == 0)
                 throw std::runtime_error("division by zero");
 
-            (*state)[var->id] /= res;
-            res = (*state)[var->id];
+            state[var->id] /= res;
+            res = state[var->id];
             break;
     }
 }

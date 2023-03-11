@@ -8,9 +8,9 @@
 namespace calculator {
     struct evaluate : public term_visitor {
         double res;
-        std::shared_ptr<state_t> state;
+        state_t& state;
 
-        explicit evaluate (std::shared_ptr<state_t> s) : state(std::move(s)) {}
+        explicit evaluate (state_t& s) : state(s) {}
         evaluate() = default;
 
         void visit(var_t &) override;

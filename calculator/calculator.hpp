@@ -39,9 +39,8 @@ namespace calculator
 
         double operator()(state_t& s) const {
             auto state = std::make_shared<state_t>(s);
-            evaluate e = evaluate{state};
+            evaluate e = evaluate{s};
             (*term).accept(e);
-            std::copy(e.state->begin(), e.state->end(), std::begin(s));
             return e.res;
         }
     };
