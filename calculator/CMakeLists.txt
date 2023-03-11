@@ -11,7 +11,7 @@ set(BUILD_SHARED_LIBS OFF) # Stick with statically linked libraries
 include(sanitizers.cmake)
 include(doctest.cmake)
 
-add_executable(test_calculator test_calculator.cpp terms/const_t.h terms/term_t.h terms/var_t.h terms/unary_t.h terms/assign_t.h terms/binary_t.h terms/assign_t.cpp symbol_table_t.cpp symbol_table_t.h terms/visitors/term_visitor.h terms/visitors/evaluate.h terms/visitors/evaluate.cpp)
+add_executable(test_calculator test_calculator.cpp terms/const_t.h terms/term_t.h terms/var_t.h terms/unary_t.h terms/assign_t.h terms/binary_t.h terms/assign_t.cpp symbol_table_t.cpp symbol_table_t.h terms/visitors/term_visitor.h terms/visitors/evaluate.h terms/visitors/evaluate.cpp terms/var_t.cpp terms/unary_t.cpp terms/const_t.cpp terms/binary_t.cpp)
 target_link_libraries(test_calculator PRIVATE doctest::doctest)
 
 enable_testing()

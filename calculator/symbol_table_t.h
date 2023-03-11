@@ -6,8 +6,8 @@ namespace calculator {
     using state_t = std::vector<double>;
 
     class symbol_table_t {
-        std::vector<std::string> names;
-        std::vector<double> initial;
+        std::vector<std::string> names{};
+        std::vector<double> initial{};
     public:
         [[nodiscard]] expr_t var(std::string name, double init = 0);
 

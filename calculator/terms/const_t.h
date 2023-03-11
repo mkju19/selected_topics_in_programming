@@ -1,10 +1,12 @@
 #ifndef CALCULATOR_CONST_T_H
 #define CALCULATOR_CONST_T_H
 #include "term_t.h"
-#include "visitors/term_visitor.h"
-#include "visitors/evaluate.h"
+//#include "visitors/term_visitor.h"
+//#include "visitors/evaluate.h"
 
 namespace calculator {
+    struct evaluate;
+
     class const_t : public term_t {
         double value = 0;
 
@@ -15,7 +17,7 @@ namespace calculator {
 
         double operator()(state_t &_) const override { return value; }
 
-        void accept(term_visitor & v) override {v.visit(*this);}
+        void accept(term_visitor & v) override;
 
         friend class evaluate;
     };

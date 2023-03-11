@@ -2,9 +2,15 @@
 #define CALCULATOR_TERM_T_H
 
 #include <vector>
-#include "visitors/term_visitor.h"
+//#include "visitors/term_visitor.h"
 
 namespace calculator {
+    struct evaluate;
+
+    struct term_visitor;
+
+    using state_t = std::vector<double>;
+
     struct term_t {
         using state_t = std::vector<double>;
 

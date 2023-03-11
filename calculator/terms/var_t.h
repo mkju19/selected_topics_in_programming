@@ -1,14 +1,16 @@
 #ifndef CALCULATOR_VAR_T_H
 #define CALCULATOR_VAR_T_H
 
-#include "term_t.h"
+//#include "term_t.h"
 //#include "assign_t.h"
 //#include "visitors/term_visitor.h"
 //#include "visitors/evaluate.h"
 //#include "../symbol_table_t.h"
-
+#include <vector>
+#include "term_t.h"
 
 namespace calculator {
+
     class assign_t;
 
     class var_t : public term_t {
@@ -18,9 +20,7 @@ namespace calculator {
         explicit var_t(const size_t &index) : id(index) {};
 
         double operator()(state_t& s) const override { return s[id]; }
-        void accept(term_visitor& v) override {
-            v.visit(*this);
-        };
+        void accept(term_visitor& v) override ;
 
         var_t(const var_t &) = default;
 

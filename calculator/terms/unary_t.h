@@ -8,6 +8,7 @@
 #include <memory>
 
 namespace calculator {
+
     class unary_t : public term_t {
     public:
         enum op_t {
@@ -26,7 +27,7 @@ namespace calculator {
                     return -(*term)(s);
             }
         }
-        void accept(calculator::term_visitor & v) override {v.visit(*this);}
+        void accept(calculator::term_visitor & v) override;
 
     private:
         std::shared_ptr<term_t> term;

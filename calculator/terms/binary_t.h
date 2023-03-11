@@ -5,6 +5,7 @@
 #include "term_t.h"
 
 namespace calculator {
+
     class binary_t : public term_t {
     public:
         enum op_t { add, sub, mul, div};
@@ -26,7 +27,7 @@ namespace calculator {
                     return (*term1)(s) / t2;
             }
         }
-        void accept(term_visitor& v) override {v.visit(*this);}
+        void accept(term_visitor& v) override;
     private:
         std::shared_ptr<term_t> term1;
         std::shared_ptr<term_t> term2;
