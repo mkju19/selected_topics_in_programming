@@ -12,7 +12,7 @@
 #include "terms/binary_t.h"
 #include "terms/const_t.h"
 #include "terms/assign_t.h"
-#include "terms/visitors/evaluate.h"
+#include "terms/visitors/evaluator.h"
 #include "exceptions.h"
 
 namespace calculator
@@ -41,7 +41,7 @@ namespace calculator
 
         double operator()(state_t& s) const {
             auto state = std::make_shared<state_t>(s);
-            auto e = evaluate{s};
+            auto e = evaluator{s};
             (*term).accept(e);
             return e.res;
         }

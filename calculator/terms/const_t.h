@@ -3,7 +3,7 @@
 #include "term_t.h"
 
 namespace calculator {
-    struct evaluate;
+    struct evaluator;
 
     class const_t : public term_t {
         double value = 0;
@@ -17,7 +17,7 @@ namespace calculator {
 
         void accept(term_visitor & v) override;
 
-        friend class evaluate;
+        friend class evaluator;
     };
 }
 

@@ -1,4 +1,4 @@
-#include "evaluate.h"
+#include "evaluator.h"
 #include "../var_t.h"
 #include "../const_t.h"
 #include "../unary_t.h"
@@ -7,15 +7,15 @@
 
 
 
-void calculator::evaluate::visit(var_t& v) {
+void calculator::evaluator::visit(var_t& v) {
     res = state[v.id];
 }
 
-void calculator::evaluate::visit(const_t& c ) {
+void calculator::evaluator::visit(const_t& c ) {
     res = c.value;
 }
 
-void calculator::evaluate::visit(unary_t& u) {
+void calculator::evaluator::visit(unary_t& u) {
     auto op = u.op;
 
     switch (op) {
@@ -29,9 +29,9 @@ void calculator::evaluate::visit(unary_t& u) {
     }
 }
 
-void calculator::evaluate::visit(binary_t& b) {
+void calculator::evaluator::visit(binary_t& b) {
     auto op = b.op;
-    auto e2 = evaluate{this->state};
+    auto e2 = evaluator{this->state};
 
     switch (op) {
         case binary_t::op_t::add:
@@ -62,7 +62,7 @@ void calculator::evaluate::visit(binary_t& b) {
     }
 }
 
-void calculator::evaluate::visit(assign_t& a) {
+void calculator::evaluator::visit(assign_t& a) {
     auto op = a.op;
     auto var = a.var;
 

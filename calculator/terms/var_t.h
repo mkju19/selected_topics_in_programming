@@ -20,7 +20,7 @@ namespace calculator {
         var_t(const var_t &) = default;
 
         friend class assign_t;
-        friend class evaluate;
+        friend class evaluator;
         friend class symbol_table_t;
     };
 }

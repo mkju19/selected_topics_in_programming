@@ -78,7 +78,7 @@ TEST_CASE("Calculate expressions lazily")
         CHECK((7 + a)(state) == 9);
         CHECK((a - 7)(state) == -5);
     }
-    SUBCASE("Store expression and evaluate lazily")
+    SUBCASE("Store expression and evaluator lazily")
     {
         auto expr = (a + b) * c;
         auto c_4 = c <<= 4;

@@ -19,7 +19,7 @@ namespace calculator {
         std::shared_ptr<term_t> term;
         op_t op;
 
-        friend class evaluate;
+        friend class evaluator;
     };
 }
 

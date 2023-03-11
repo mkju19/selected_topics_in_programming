@@ -4,7 +4,7 @@
 #include <vector>
 
 namespace calculator {
-    struct evaluate;
+    struct evaluator;
 
     struct term_visitor;
 
