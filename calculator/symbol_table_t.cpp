@@ -9,3 +9,4 @@ calculator::expr_t calculator::symbol_table_t::var(std::string name, double init
     auto v = std::make_shared<var_t>(res);
     return expr_t{std::move(v)};
 }
+

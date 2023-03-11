@@ -5,8 +5,6 @@
 #include "../binary_t.h"
 #include "../assign_t.h"
 
-
-
 void calculator::evaluator::visit(var_t& v) {
     res = state[v.id];
 }
@@ -54,11 +52,9 @@ void calculator::evaluator::visit(binary_t& b) {
             if (e2.res == 0)
                 throw divisionByZeroException();
 
-
             b.term1->accept(*this);
             res = res / e2.res;
             break;
-
     }
 }
 

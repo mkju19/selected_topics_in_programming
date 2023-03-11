@@ -91,7 +91,7 @@ TEST_CASE("Calculate expressions lazily")
     SUBCASE("Printer does not crash")
     {
         auto expr = a<<=  2 + b + (-c) - c;
-        auto p = calculator::printer{state, sys.names};
+        auto p = calculator::printer{state, sys.getNames()};
         expr.term->accept(p);
         std::cout << "end";
     }

@@ -13,7 +13,6 @@ namespace calculator {
     using state_t = std::vector<double>;
 
     struct term_t {
-        using state_t = std::vector<double>;
 
         term_t() = default;
 
