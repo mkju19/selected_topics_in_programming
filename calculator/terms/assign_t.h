@@ -13,10 +13,13 @@ namespace calculator {
         enum op_t {add, sub, mul, div, eq};
         assign_t(std::shared_ptr<var_t> v, std::shared_ptr<term_t> t, op_t o) :var(std::move(v)), term(std::move(t)), op(o){};
         double operator()(state_t &s)const override;
+        void accept(term_visitor& v) override {v.visit(*this);}
     private:
         std::shared_ptr<var_t> var;
         std::shared_ptr<term_t> term;
         op_t op;
+
+        friend class evaluate;
     };
 }
 

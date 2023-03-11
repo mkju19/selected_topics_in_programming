@@ -26,10 +26,13 @@ namespace calculator {
                     return (*term1)(s) / t2;
             }
         }
+        void accept(term_visitor& v) override {v.visit(*this);}
     private:
         std::shared_ptr<term_t> term1;
         std::shared_ptr<term_t> term2;
         op_t op;
+
+        friend class evaluate;
     };
 }
 

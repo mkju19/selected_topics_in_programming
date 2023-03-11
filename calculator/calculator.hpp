@@ -11,6 +11,7 @@
 #include "terms/unary_t.h"
 #include "terms/binary_t.h"
 #include "terms/const_t.h"
+#include "terms/assign_t.h"
 
 namespace calculator
 {
@@ -25,8 +26,11 @@ namespace calculator
         expr_t(expr_t&& other) noexcept = default;
         ~expr_t() noexcept = default;
 
-        explicit(false) expr_t(double c) : term(std::make_shared<const_t>(const_t{c})){};
-        explicit(false) expr_t(int c) : term(std::make_shared<const_t>(const_t{c})){};
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "google-explicit-constructor"
+        [[maybe_unused]] explicit(false) expr_t(double c) : term(std::make_shared<const_t>(const_t{c})){};
+        [[maybe_unused]] explicit(false) expr_t(int c) : term(std::make_shared<const_t>(const_t{c})){};
+#pragma clang diagnostic pop
 
         explicit expr_t(std::shared_ptr<var_t> t)       : term(std::move(t)) {};
         explicit expr_t(std::shared_ptr<unary_t> t)     : term(std::move(t)) {};

@@ -1,7 +1,9 @@
 #ifndef CALCULATOR_SYMBOL_TABLE_T_H
 #define CALCULATOR_SYMBOL_TABLE_T_H
-
 namespace calculator {
+
+    class expr_t;
+    using state_t = std::vector<double>;
 
     class symbol_table_t {
         std::vector<std::string> names;
