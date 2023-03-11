@@ -4,14 +4,12 @@
 #include "memory"
 #include "term_visitor.h"
 
-
 namespace calculator {
     struct evaluate : public term_visitor {
-        double res;
+        double res = 0;
         state_t& state;
 
         explicit evaluate (state_t& s) : state(s) {}
-        evaluate() = default;
 
         void visit(var_t &) override;
 

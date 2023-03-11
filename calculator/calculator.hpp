@@ -13,6 +13,8 @@
 #include "terms/const_t.h"
 #include "terms/assign_t.h"
 #include "terms/visitors/evaluate.h"
+#include "exceptions.h"
+
 namespace calculator
 {
     /** Type to capture the state of entire calculator (one number per variable): */
@@ -39,7 +41,7 @@ namespace calculator
 
         double operator()(state_t& s) const {
             auto state = std::make_shared<state_t>(s);
-            evaluate e = evaluate{s};
+            auto e = evaluate{s};
             (*term).accept(e);
             return e.res;
         }
@@ -77,35 +79,35 @@ namespace calculator
     inline expr_t operator<<=(const expr_t& v, const expr_t& e) {
         auto varP = std::dynamic_pointer_cast<var_t>(v.term);
         if (varP == nullptr)
-            throw std::runtime_error("assignment destination must be a variable expression");
+            throw destMustBeVariableException();
         auto assignP = std::make_shared<assign_t>(std::move(varP), e.term, assign_t::op_t::eq);
         return expr_t{assignP};
     }
     inline expr_t operator+=(const expr_t& v, const expr_t& e) {
         auto varP = std::dynamic_pointer_cast<var_t>(v.term);
         if (varP == nullptr)
-            throw std::runtime_error("assignment destination must be a variable expression");
+            throw destMustBeVariableException();
         auto assignP = std::make_shared<assign_t>(std::move(varP), e.term, assign_t::op_t::add);
         return expr_t{assignP};
     }
     inline expr_t operator-=(const expr_t& v, const expr_t& e) {
         auto varP = std::dynamic_pointer_cast<var_t>(v.term);
         if (varP == nullptr)
-            throw std::runtime_error("assignment destination must be a variable expression");
+            throw destMustBeVariableException();
         auto assignP = std::make_shared<assign_t>(std::move(varP), e.term, assign_t::op_t::sub);
         return expr_t{assignP};
     }
     inline expr_t operator*=(const expr_t& v, const expr_t& e) {
         auto varP = std::dynamic_pointer_cast<var_t>(v.term);
         if (varP == nullptr)
-            throw std::runtime_error("assignment destination must be a variable expression");
+            throw destMustBeVariableException();
         auto assignP = std::make_shared<assign_t>(std::move(varP), e.term, assign_t::op_t::mul);
         return expr_t{assignP};
     }
     inline expr_t operator/=(const expr_t& v, const expr_t& e) {
         auto varP = std::dynamic_pointer_cast<var_t>(v.term);
         if (varP == nullptr)
-            throw std::runtime_error("assignment destination must be a variable expression");
+            throw destMustBeVariableException();
         auto assignP = std::make_shared<assign_t>(std::move(varP), e.term, assign_t::op_t::div);
         return expr_t{assignP};
     }

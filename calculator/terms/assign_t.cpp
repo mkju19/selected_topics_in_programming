@@ -1,7 +1,7 @@
 #include "assign_t.h"
 #include "var_t.h"
 #include "visitors/term_visitor.h"
-
+#include "../exceptions.h"
 double calculator::assign_t::operator()(calculator::term_t::state_t &s) const {
     switch (op) {
         case eq:
@@ -19,7 +19,7 @@ double calculator::assign_t::operator()(calculator::term_t::state_t &s) const {
         case div:
             auto t = (*term)(s);
             if (t == 0)
-                throw std::runtime_error("division by zero");
+                throw divisionByZeroException();
             s[var->id] /= t;
             break;
     }

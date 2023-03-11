@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "term_t.h"
+#include "../exceptions.h"
 
 namespace calculator {
 
@@ -23,7 +24,7 @@ namespace calculator {
                 case op_t::div:
                     auto t2 = (*term2)(s);
                     if (t2 == 0)
-                        throw std::runtime_error("division by zero");
+                        throw divisionByZeroException();
                     return (*term1)(s) / t2;
             }
         }

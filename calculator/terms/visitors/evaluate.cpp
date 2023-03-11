@@ -4,6 +4,8 @@
 #include "../unary_t.h"
 #include "../binary_t.h"
 #include "../assign_t.h"
+#include "../../exceptions.h"
+
 
 void calculator::evaluate::visit(var_t& v) {
     res = state[v.id];
@@ -20,7 +22,6 @@ void calculator::evaluate::visit(unary_t& u) {
         case unary_t::op_t::plus:
             (*u.term).accept(*this);
             break;
-//            res = res;
         case unary_t::op_t::minus:
             (*u.term).accept(*this);
             res = -res;
@@ -30,7 +31,7 @@ void calculator::evaluate::visit(unary_t& u) {
 
 void calculator::evaluate::visit(binary_t& b) {
     auto op = b.op;
-    evaluate e2 = evaluate{this->state};
+    auto e2 = evaluate{this->state};
 
     switch (op) {
         case binary_t::op_t::add:
@@ -51,7 +52,8 @@ void calculator::evaluate::visit(binary_t& b) {
         case binary_t::op_t::div:
             b.term2->accept(e2);
             if (e2.res == 0)
-                throw std::runtime_error("division by zero");
+                throw divisionByZeroException();
+
 
             b.term1->accept(*this);
             res = res / e2.res;
@@ -87,7 +89,7 @@ void calculator::evaluate::visit(assign_t& a) {
         case assign_t::op_t::div:
             a.term->accept(*this);
             if (res == 0)
-                throw std::runtime_error("division by zero");
+                throw divisionByZeroException();
 
             state[var->id] /= res;
             res = state[var->id];
