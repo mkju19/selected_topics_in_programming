@@ -9,19 +9,20 @@ namespace calculator {
 
     class binary_t : public term_t {
     public:
-        enum op_t { add, sub, mul, div};
+        enum class op_t { add, sub, mul, div};
 
         binary_t(std::shared_ptr<term_t> t1, std::shared_ptr<term_t> t2, op_t o) : term1(std::move(t1)), term2(std::move(t2)), op(o) {}
 
         double operator()(state_t &s) const override{
             switch (op) {
-                case op_t::add:
+                using enum calculator::binary_t::op_t;
+                case add:
                     return (*term1)(s) + (*term2)(s);
-                case op_t::sub:
+                case sub:
                     return (*term1)(s) - (*term2)(s);
-                case op_t::mul:
+                case mul:
                     return (*term1)(s) * (*term2)(s);
-                case op_t::div:
+                case div:
                     auto t2 = (*term2)(s);
                     if (t2 == 0)
                         throw divisionByZeroException();

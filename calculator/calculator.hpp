@@ -49,29 +49,29 @@ namespace calculator
 
     /** unary operators: */
     inline expr_t operator+(const expr_t& e) {
-        auto unaryP = std::make_shared<unary_t>(e.term, unary_t::plus);
+        auto unaryP = std::make_shared<unary_t>(e.term, unary_t::op_t::plus);
         return expr_t{std::move(unaryP)};
     }
     inline expr_t operator-(const expr_t& e) {
-        auto unaryP = std::make_shared<unary_t>(e.term, unary_t::minus);
+        auto unaryP = std::make_shared<unary_t>(e.term, unary_t::op_t::minus);
         return expr_t{std::move(unaryP)};
     }
 
     /** binary operators: */
     inline expr_t operator+(const expr_t& e1, const expr_t& e2) {
-        auto binaryP = std::make_shared<binary_t>(e1.term, e2.term, binary_t::add);
+        auto binaryP = std::make_shared<binary_t>(e1.term, e2.term, binary_t::op_t::add);
         return expr_t{binaryP};
     }
     inline expr_t operator-(const expr_t& e1, const expr_t& e2) {
-        auto binaryP = std::make_shared<binary_t>(e1.term, e2.term, binary_t::sub);
+        auto binaryP = std::make_shared<binary_t>(e1.term, e2.term, binary_t::op_t::sub);
         return expr_t{binaryP};
     }
     inline expr_t operator/(const expr_t& e1, const expr_t& e2) {
-        auto binaryP = std::make_shared<binary_t>(e1.term, e2.term, binary_t::div);
+        auto binaryP = std::make_shared<binary_t>(e1.term, e2.term, binary_t::op_t::div);
         return expr_t{binaryP};
     }
     inline expr_t operator*(const expr_t& e1, const expr_t& e2) {
-        auto binaryP = std::make_shared<binary_t>(e1.term, e2.term, binary_t::mul);
+        auto binaryP = std::make_shared<binary_t>(e1.term, e2.term, binary_t::op_t::mul);
         return expr_t{binaryP};
     }
 

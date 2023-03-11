@@ -2,7 +2,6 @@
 #define CALCULATOR_TERM_T_H
 
 #include <vector>
-//#include "visitors/term_visitor.h"
 
 namespace calculator {
     struct evaluate;

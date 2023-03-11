@@ -4,7 +4,7 @@
 #include "../unary_t.h"
 #include "../binary_t.h"
 #include "../assign_t.h"
-#include "../../exceptions.h"
+
 
 
 void calculator::evaluate::visit(var_t& v) {

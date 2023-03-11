@@ -11,9 +11,7 @@ namespace calculator {
 
     class unary_t : public term_t {
     public:
-        enum op_t {
-            plus, minus
-        };
+        enum class op_t { plus, minus};
 
         ~unary_t() override = default;
 
@@ -25,6 +23,8 @@ namespace calculator {
                     return (*term)(s);
                 case op_t::minus:
                     return -(*term)(s);
+                default:
+                    return 0;
             }
         }
         void accept(calculator::term_visitor & v) override;

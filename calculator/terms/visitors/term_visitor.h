@@ -11,6 +11,8 @@ namespace calculator {
     struct term_visitor {
         using state_t = std::vector<double>;
 
+        virtual ~term_visitor() = default;
+
         virtual void visit(var_t&) = 0;
 
         virtual void visit(const_t&) = 0;

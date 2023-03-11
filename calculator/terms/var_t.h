@@ -1,11 +1,6 @@
 #ifndef CALCULATOR_VAR_T_H
 #define CALCULATOR_VAR_T_H
 
-//#include "term_t.h"
-//#include "assign_t.h"
-//#include "visitors/term_visitor.h"
-//#include "visitors/evaluate.h"
-//#include "../symbol_table_t.h"
 #include <vector>
 #include "term_t.h"
 

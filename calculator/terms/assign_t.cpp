@@ -4,6 +4,7 @@
 #include "../exceptions.h"
 double calculator::assign_t::operator()(calculator::term_t::state_t &s) const {
     switch (op) {
+        using enum calculator::assign_t::op_t;
         case eq:
             s[var->id] = (*term)(s);
             break;
