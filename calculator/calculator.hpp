@@ -12,7 +12,7 @@
 #include "terms/binary_t.h"
 #include "terms/const_t.h"
 #include "terms/assign_t.h"
-
+#include "terms/visitors/evaluate.h"
 namespace calculator
 {
     /** Type to capture the state of entire calculator (one number per variable): */
@@ -26,18 +26,24 @@ namespace calculator
         expr_t(expr_t&& other) noexcept = default;
         ~expr_t() noexcept = default;
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "google-explicit-constructor"
+        #pragma clang diagnostic push
+        #pragma ide diagnostic ignored "google-explicit-constructor"
         [[maybe_unused]] explicit(false) expr_t(double c) : term(std::make_shared<const_t>(const_t{c})){};
         [[maybe_unused]] explicit(false) expr_t(int c) : term(std::make_shared<const_t>(const_t{c})){};
-#pragma clang diagnostic pop
+        #pragma clang diagnostic pop
 
         explicit expr_t(std::shared_ptr<var_t> t)       : term(std::move(t)) {};
         explicit expr_t(std::shared_ptr<unary_t> t)     : term(std::move(t)) {};
         explicit expr_t(std::shared_ptr<binary_t> t)    : term(std::move(t)) {};
         explicit expr_t(std::shared_ptr<assign_t> t)    : term(std::move(t)) {};
 
-        double operator()(state_t& s) const { return (*term)(s);}
+        double operator()(state_t& s) const {
+            auto state = std::make_shared<state_t>(s);
+            evaluate e = evaluate{state};
+            (*term).accept(e);
+            std::copy(e.state->begin(), e.state->end(), std::begin(s));
+            return e.res;
+        }
     };
 
     /** unary operators: */

@@ -39,9 +39,11 @@ TEST_CASE("Calculate expressions lazily")
         CHECK((c <<= b - a)(state) == 1);
         CHECK(c(state) == 1);
 
-//        // TODO: implement multiplication
+        // TODO: implement multiplication
+        // 1 += 3 - 2 * 1
         CHECK((c += b - a * c)(state) == 2);
         CHECK(c(state) == 2);
+        // c += 3 - 2 * 2
         CHECK((c += b - a * c)(state) == 1);
         CHECK(c(state) == 1);
 
