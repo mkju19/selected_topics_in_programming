@@ -15,7 +15,6 @@ namespace calculator {
     public:
         explicit var_t(const size_t &index) : id(index) {};
 
-        double operator()(state_t& s) const override { return s[id]; }
         void accept(term_visitor& v) override ;
 
         var_t(const var_t &) = default;

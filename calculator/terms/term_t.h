@@ -19,8 +19,6 @@ namespace calculator {
 
         virtual ~term_t() noexcept = default;
 
-        virtual double operator()(state_t &s) const = 0;
-
         virtual void accept(term_visitor&) = 0;
     };
 }

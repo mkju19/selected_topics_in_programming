@@ -13,8 +13,6 @@ namespace calculator {
         explicit const_t(int c) : value(c){};
         ~const_t() override = default;
 
-        double operator()(state_t &_) const override { return value; }
-
         void accept(term_visitor & v) override;
 
         friend class evaluator;
