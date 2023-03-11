@@ -2,6 +2,7 @@
 #define CALCULATOR_VAR_T_H
 
 #include <vector>
+#include <iostream>
 #include "term_t.h"
 
 namespace calculator {
@@ -20,8 +21,9 @@ namespace calculator {
         var_t(const var_t &) = default;
 
         friend class assign_t;
-        friend class evaluator;
         friend class symbol_table_t;
+        friend class evaluator;
+        friend class printer;
     };
 }
 

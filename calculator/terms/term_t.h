@@ -4,9 +4,11 @@
 #include <vector>
 
 namespace calculator {
-    struct evaluator;
 
     struct term_visitor;
+    struct evaluator;
+    struct printer;
+    class ostream;
 
     using state_t = std::vector<double>;
 

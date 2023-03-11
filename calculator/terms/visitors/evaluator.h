@@ -1,7 +1,7 @@
 #ifndef CALCULATOR_EVALUATOR_H
 #define CALCULATOR_EVALUATOR_H
-#include "vector"
-#include "memory"
+#include <vector>
+#include <memory>
 #include "term_visitor.h"
 
 namespace calculator {

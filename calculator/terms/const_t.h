@@ -18,6 +18,7 @@ namespace calculator {
         void accept(term_visitor & v) override;
 
         friend class evaluator;
+        friend class printer;
     };
 }
 

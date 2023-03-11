@@ -1,5 +1,6 @@
 #include "calculator.hpp"
 #include "symbol_table_t.h"
+#include "terms/visitors/printer.h"
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
@@ -85,5 +86,13 @@ TEST_CASE("Calculate expressions lazily")
         CHECK(expr(state) == 0);
         CHECK(c_4(state) == 4);
         CHECK(expr(state) == 20);
+    }
+
+    SUBCASE("Printer does not crash")
+    {
+        auto expr = a<<=  2 + b + (-c) - c;
+        auto p = calculator::printer{state, sys.names};
+        expr.term->accept(p);
+        std::cout << "end";
     }
 }

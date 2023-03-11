@@ -5,3 +5,4 @@ void calculator::var_t::accept(term_visitor &v) {
     v.visit(*this);
 }
 
+

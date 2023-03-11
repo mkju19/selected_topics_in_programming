@@ -20,6 +20,7 @@ namespace calculator {
         op_t op;
 
         friend class evaluator;
+        friend class printer;
     };
 }
 
