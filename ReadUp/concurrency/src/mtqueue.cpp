@@ -1,44 +1,55 @@
 #include "mtqueue.hpp"
 #include "iostream"
+#include <random>
+#include <thread>
 
-void produce(mtqueue<int>&)
+void produce(mtqueue<int>& q, int n)
 {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(1, 100);
+
+    for (auto i = 0u; i < n ; i++){
+        auto val = dist(gen);
+        std::cout << "pushed: " + std::to_string(val) + "\n";
+        q.put(std::move(val));
+    }
+
+    std::cout << "finished pushing: "+ std::to_string(n) + " elements\n";
 	// TODO: create producer routine: put random numbers into queue
 }
 
-void consume(mtqueue<int>&)
+void consume(mtqueue<int>& q, int n)
 {
+    for (auto i = 0; i < n ; i++){
+        auto val = q.get();
+        std::cout << "POPed: " + std::to_string(val) + "\n";
+    }
+    std::cout << "Finished POPing " + std::to_string(n) + "elements.\n";
 	// TODO: create consumer routine: fetch and print values
 }
 
 int main(){
 
-    auto q = mtqueue<int>{};
-    std::cout << "is empty: " << (q.isEmpty() ? "true" : "false") << std::endl;
-    q.put(1);
-    std::cout << "is empty: " << (q.isEmpty() ? "true" : "false") << std::endl;
-    auto res = q.get();
-    std::cout << "is empty: " << (q.isEmpty() ? "true" : "false") << std::endl;
-
-    q.put(2);
-
-    int a = 4;
-    int& b = a;
-
-    q.put(b);
-    res = q.get();
-
-    if(res.has_value())
-        std::cout << "The first is: " << (res.value()) << std::endl;
-    else
-        std::cout << "The queue was empty" << std::endl;
-
-    res = q.get();
-    if(res.has_value())
-        std::cout << "The second is: " << (res.value()) << std::endl;
-    else
-        std::cout << "The queue was empty" << std::endl;
 	// TODO: create an instance of a queue
+    auto q = mtqueue<int>{};
+
+    auto produce_t1 = std::jthread(produce, std::ref(q), 1);
+    auto produce_t2 = std::jthread(produce, std::ref(q), 2);
+    auto produce_t3 = std::jthread(produce, std::ref(q), 3);
+
+    auto consume_t1 = std::jthread(consume, std::ref(q), 1);
+    auto consume_t2 = std::jthread(consume, std::ref(q), 2);
+    auto consume_t3 = std::jthread(consume, std::ref(q), 3);
+
+
+    produce_t1.join();
+    produce_t2.join();
+    produce_t3.join();
+
+    consume_t1.join();
+    consume_t2.join();
+    consume_t3.join();
 	// TODO: spawn multiple threads for producer and consumer using the queue
     // NOTE: producer and consumer expect to bind to the queue by reference:
     // 1) STL uses values, therefore plain queue argument might not work: wrap the queue into std::ref instead.
