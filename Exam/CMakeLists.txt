@@ -12,9 +12,9 @@ set(BUILD_SHARED_LIBS OFF) # Stick with statically linked libraries
 
 include(doctest.cmake)
 
-add_executable(Exam main.cpp)
-add_executable(Test_func Test_doctest.cpp FunctionToTest.h)
-target_link_libraries(Test_func PRIVATE doctest::doctest)
+add_executable(Exam main.cpp vessel_t.h Reaction/Reaction.cpp Reaction/Reaction.h Reaction/Agent.cpp Reaction/Agent.h Reaction/ReactionComponent.cpp Reaction/ReactionComponent.h Reaction/Rule.cpp Reaction/Rule.h)
+add_executable(Test_stochastic_simulation test_stochastic_simulation.cpp vessel_t.h Reaction/Reaction.cpp Reaction/Reaction.h Reaction/Agent.cpp Reaction/Agent.h Reaction/ReactionComponent.cpp Reaction/ReactionComponent.h Reaction/Rule.cpp Reaction/Rule.h)
+target_link_libraries(Test_stochastic_simulation PRIVATE doctest::doctest)
 
 enable_testing()
-add_test(NAME Test_func COMMAND Test_func)
+add_test(NAME Test_stochastic_simulation COMMAND Test_stochastic_simulation)
