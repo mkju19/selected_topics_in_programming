@@ -14,13 +14,13 @@ Rule operator>>=(Agent &input, Agent &output) {
 Rule operator>>=(Agent &input, ReactionComponent &&output) {
     auto p_input = std::make_shared<Agent>(input);
 
-    return Rule(std::vector{std::move(p_input)}, output.getAgents());
+    return Rule(std::vector{std::move(p_input)}, std::move(output.getAgents()));
 }
 Rule operator>>=(ReactionComponent &&input, Agent &output) {
     auto p_output = std::make_shared<Agent>(output);
 
-    return Rule(input.getAgents(), std::vector{std::move(p_output)});
+    return Rule(std::move(input.getAgents()), std::vector{std::move(p_output)});
 }
 Rule operator>>=(ReactionComponent &&input, ReactionComponent &&output) {
-    return {input.getAgents(), output.getAgents()};
+    return {std::move(input.getAgents()), std::move(output.getAgents())};
 }

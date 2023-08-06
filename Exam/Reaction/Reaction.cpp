@@ -2,7 +2,8 @@
 #include "Reaction.h"
 #include "Rule.h"
 #include "Agent.h"
-Reaction::Reaction(Rule rule, double lambda) : input(rule.getInputAgents()), product(rule.getOutputAgents()), lambda(lambda){}
+Reaction::Reaction(const Rule& rule, double lambda) : input(rule.getInputAgents()), product(rule.getOutputAgents()), lambda(lambda){}
+
 
 //REQUIREMENT 2a - Pretty printer in human readable format
 std::ostream &operator<<(std::ostream &out, const Reaction &reaction) {
@@ -24,3 +25,4 @@ std::ostream &operator<<(std::ostream &out, const Reaction &reaction) {
     out << "(rate: " << reaction.lambda << ")";
     return out;
 }
+

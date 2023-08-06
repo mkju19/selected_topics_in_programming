@@ -16,7 +16,7 @@ class Reaction {
     double lambda;
 public:
     Reaction(int in, int out, int lambda): input(in), product(out), lambda(lambda){};
-    Reaction(Rule rule, double lambda);
+    Reaction(const Rule& rule, double lambda);
 
     //REQUIREMENT 2a - Pretty printer in human readable format
     friend std::ostream& operator<< (std::ostream &out, Reaction const& reaction);

@@ -19,8 +19,8 @@ class Rule {
     Agents outputAgents;
 public:
     Rule(Agents lhs, Agents rhs): inputAgents(std::move(lhs)), outputAgents(std::move(rhs)){};
-    Agents getInputAgents(){return inputAgents;};
-    Agents getOutputAgents(){return outputAgents;};
+    [[nodiscard]] Agents getInputAgents() const{return inputAgents;};
+    [[nodiscard]] Agents getOutputAgents() const{return outputAgents;};
 };
 
 // REQUIREMENT 1 - overload operators to support reaction rule typesetting in code
