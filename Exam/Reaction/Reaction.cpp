@@ -10,13 +10,13 @@ std::ostream &operator<<(std::ostream &out, const Reaction &reaction) {
     auto product = &reaction.product;
 
     for (auto i = 0; i < input->size(); i++){
-        out << "(" << input->at(i)->getId() << ":" << input->at(i)->getValue() << ") ";
+        out << *input->at(i) << " ";
 
         if (i < input->size()-1){ out << "+ "; }
         else{ out << ">>= "; }
     }
     for (auto i = 0; i < product->size(); i++){
-        out << "(" << product->at(i)->getId() << ":" << product->at(i)->getValue() << ") ";
+        out << *product->at(i) << " ";
 
         if (i < product->size()-1) { out << "+ ";}
     }
