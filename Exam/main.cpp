@@ -16,20 +16,21 @@ void createNode(Agraph_t *g, std::string &name, std::string &fillColor, const st
 }
 
 int main() {
-    auto a = Agent("aa", 1);
+    auto a = Agent("aa", 2);
     auto b = Agent("b", 2);
     auto c = Agent("c", 3);
     auto rule1 = Rule(a >>=  a + c);
     auto reaction = Reaction(a + b >>= c + b, 0.4);
-    std::cout << "Rule1 input: " << rule1.getInputAgents().at(0).get()->getId() << std::endl;
-    std::cout << "Rule1 product: " << rule1.getOutputAgents().at(1).get()->getId() << std::endl;
+//    std::cout << "Rule1 input: " << rule1.getInputAgents().at(0).get()->getId() << std::endl;
+//    std::cout << "Rule1 product: " << rule1.getOutputAgents().at(1).get()->getId() << std::endl;
 
-    auto symbolTable = SymbolTable<std::shared_ptr<Agent>>{};
+    auto symbolTable = SymbolTable<Agent>{};
 
-    symbolTable.addElement(a.getId(), std::make_shared<Agent>(a));
-    symbolTable.addElement(a.getId(), std::make_shared<Agent>(a));
-    a.setValue(2);
-    std::cout << *symbolTable.getElement("d") << std::endl;
+    symbolTable.addElement(a.getId(), a);
+    a.setValue(3);
+    a.setValue(5);
+    symbolTable.updateElement(a.getId(), a);
+    std::cout << symbolTable.getElement(a.getId()) << std::endl;
 
 //    GVC_t *gvc = gvContext();
 //    Agraph_t *g = agopen((char*)"g", Agdirected, nullptr);
