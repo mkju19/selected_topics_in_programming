@@ -1,0 +1,11 @@
+add_library(
+        Include
+        Reaction/Agent.cpp
+        Reaction/Agent.h
+        Reaction/Reaction.cpp
+        Reaction/Reaction.h
+        Reaction/ReactionComponent.cpp
+        Reaction/ReactionComponent.h
+        Reaction/Rule.cpp
+        Reaction/Rule.h
+)

@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Reaction/Agent.h"
-#include "Reaction/Reaction.h"
-#include "Reaction/Rule.h"
-#include "Reaction/ReactionComponent.h"
+#include "Include/Reaction/Agent.h"
+#include "Include/Reaction/Reaction.h"
+#include "Include/Reaction/Rule.h"
+#include "Include/Reaction/ReactionComponent.h"
 
 
 int main() {

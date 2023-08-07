@@ -5,10 +5,10 @@
 
 #include <iostream>
 
-#include "Reaction/Agent.h"
-#include "Reaction/ReactionComponent.h"
-#include "Reaction/Rule.h"
-#include "Reaction/Reaction.h"
+#include "Include/Reaction/Agent.h"
+#include "Include/Reaction/ReactionComponent.h"
+#include "Include/Reaction/Rule.h"
+#include "Include/Reaction/Reaction.h"
 TEST_CASE("Test reactions")
 {
     auto a = Agent("a", 1);
