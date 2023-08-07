@@ -3,6 +3,7 @@
 #include "Include/Reaction/Reaction.h"
 #include "Include/Reaction/Rule.h"
 #include "Include/Reaction/ReactionComponent.h"
+#include "Include/SymbolTable.h"
 #include <graphviz/gvc.h>
 #include "graphviz/cgraph.h"
 
@@ -23,22 +24,29 @@ int main() {
     std::cout << "Rule1 input: " << rule1.getInputAgents().at(0).get()->getId() << std::endl;
     std::cout << "Rule1 product: " << rule1.getOutputAgents().at(1).get()->getId() << std::endl;
 
-    GVC_t *gvc = gvContext();
-    Agraph_t *g = agopen((char*)"g", Agdirected, nullptr);
+    auto symbolTable = SymbolTable<std::shared_ptr<Agent>>{};
 
-    // createNode
-    auto name = std::string{"node"};
-    auto fillColor = std::string{"lightgreen"};
-    auto shape = std::string{"box"};
+    symbolTable.addElement(a.getId(), std::make_shared<Agent>(a));
+    symbolTable.addElement(a.getId(), std::make_shared<Agent>(a));
+    a.setValue(2);
+    std::cout << *symbolTable.getElement("d") << std::endl;
 
-    createNode(g, name, fillColor, shape);
-
-
-    gvLayout(gvc, g, "dot");
-    gvRenderFilename(gvc, g, "png", (char*)("test.png"));
-    gvFreeLayout(gvc, g);
-    agclose(g);
-    gvFreeContext(gvc);
+//    GVC_t *gvc = gvContext();
+//    Agraph_t *g = agopen((char*)"g", Agdirected, nullptr);
+//
+//    // createNode
+//    auto name = std::string{"node"};
+//    auto fillColor = std::string{"lightgreen"};
+//    auto shape = std::string{"box"};
+//
+//    createNode(g, name, fillColor, shape);
+//
+//
+//    gvLayout(gvc, g, "dot");
+//    gvRenderFilename(gvc, g, "png", (char*)("test.png"));
+//    gvFreeLayout(gvc, g);
+//    agclose(g);
+//    gvFreeContext(gvc);
 
     return 0;
 

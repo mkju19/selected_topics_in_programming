@@ -12,6 +12,7 @@ class Agent{
     int value;
     std::string id;
 public:
+    void setValue(int v){value = v;}
     int getValue(){return value;};
     std::string getId(){return id;};
     Agent(std::string id, const int& val): value(val), id(std::move(id)){};
