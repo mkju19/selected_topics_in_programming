@@ -16,6 +16,14 @@ void createNode(Agraph_t *g, std::string &name, std::string &fillColor, const st
     agsafeset(node, (char *) "shape", (char *) shape.c_str(), (char *) "");
 }
 
+void printVector(std::vector<std::string> vec){
+    std::cout<< "| ";
+    for (const auto& item: vec){
+        std::cout << item << " | ";
+    }
+    std::cout<< std::endl;
+}
+
 int main() {
     auto a = Agent("a", 100);
     auto b = Agent("b", 2);
@@ -27,7 +35,7 @@ int main() {
     sim.addAgent(b);
     sim.addAgent(c);
     sim.addReaction(reaction);
-    sim.run(100);
+    sim.run(6, printVector);
 
 
 

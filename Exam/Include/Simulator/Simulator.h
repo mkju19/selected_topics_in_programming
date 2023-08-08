@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <random>
+#include <functional>
 #include "../SymbolTable.h"
 
 class Agent;
@@ -33,7 +34,7 @@ public:
     void addAgent(const Agent& agent);
 
 //    void run(const double& endTime);
-    std::vector<std::vector<std::string>> run(const double& endTime);
+    void run(const double& endTime, const std::function<void(std::vector<std::string>)> &observer);
 
 };
 

@@ -73,12 +73,9 @@ Reaction &Simulator::minDelayReaction() {
     return reactions.at(minIndex);
 }
 
-std::vector<std::vector<std::string>> Simulator::run(const double& endTime) {
+void Simulator::run(const double& endTime, const std::function<void(std::vector<std::string>)> &observer) {
     std::random_device rd;
     std::mt19937 gen(rd());
-
-    auto result = std::vector<std::vector<std::string>>{};
-
 
     while(elapsedTime < endTime){
         for(auto& reaction : reactions){
@@ -88,19 +85,10 @@ std::vector<std::vector<std::string>> Simulator::run(const double& endTime) {
         auto nextReaction = minDelayReaction();
         elapsedTime += nextReaction.getDelay();
         react(nextReaction);
-        ObserveState(nextReaction);
-    }
-    return result;
-}
+        auto vectorizedReaction =vectorizeReaction(nextReaction);
 
-void Simulator::ObserveState(const Reaction& reaction) const {
-    std::cout   << reaction << std::endl
-                << "Elapsed time:" << elapsedTime << std::endl
-                << "| ";
-    for(const auto& [key, agent]  : agents){
-        std::cout << *agent << " | ";
+        observer(vectorizedReaction);
     }
-    std::cout << std::endl;
 }
 
 bool Simulator::canReact(const Reaction &reaction) const {
@@ -112,6 +100,16 @@ bool Simulator::canReact(const Reaction &reaction) const {
         }
     }
     return true;
+}
+
+std::vector<std::string> Simulator::vectorizeReaction(const Reaction& reaction) const {
+    std::vector<std::string> vec;
+    vec.push_back(std::to_string(elapsedTime));
+    vec.push_back(reaction.toString());
+    for(const auto& [key, agent_ptr] : agents){
+        vec.push_back(agent_ptr->toString());
+    }
+    return vec;
 }
 
 
