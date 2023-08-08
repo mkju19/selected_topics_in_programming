@@ -1,7 +1,3 @@
-//
-// Created by marco on 05-08-2023.
-//
-
 #ifndef EXAM_REACTION_H
 #define EXAM_REACTION_H
 
@@ -11,12 +7,20 @@ class Agent;
 class Rule;
 
 class Reaction {
-    std::vector<std::shared_ptr<Agent>> input;
-    std::vector<std::shared_ptr<Agent>> product;
+    std::vector<std::string> input;
+    std::vector<std::string> product;
     double lambda;
+    double delay = 0;
 public:
     Reaction(int in, int out, int lambda): input(in), product(out), lambda(lambda){};
     Reaction(const Rule& rule, double lambda);
+    Reaction() = default;
+
+    double getDelay(){return delay;}
+    void setDelay(double d){delay = d;};
+    double getRate() const { return lambda;}
+    std::vector<std::string> getInputIds() const{return input;}
+    std::vector<std::string> getproductIds() const{return product;}
 
     //REQUIREMENT 2a - Pretty printer in human readable format
     friend std::ostream& operator<< (std::ostream &out, Reaction const& reaction);

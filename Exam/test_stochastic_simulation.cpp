@@ -37,7 +37,7 @@ TEST_CASE("Test reactions")
 TEST_CASE("Test Symbol table"){
     auto a = Agent("a", 1);
 
-    auto symbolTable = SymbolTable<Agent>{};
+    auto symbolTable = SymbolTable<std::string, Agent>{};
 
     SUBCASE("Test that the symbol table can add an object and retrieve it"){
         auto id1 = "a";
@@ -55,7 +55,8 @@ TEST_CASE("Test Symbol table"){
         int newValue = 3;
 
         symbolTable.addElement(a.getId(), a);
-        symbolTable.updateElement(a.getId(), Agent(a.getId(), newValue));
+        a.setValue(newValue);
+        symbolTable.updateElement(a.getId(), a);
 
         auto obj = symbolTable.getElement(a.getId());
         CHECK(obj.getValue() == newValue);

@@ -11,26 +11,26 @@
 #include "Exceptions.h"
 
 //REQUIREMENT 3 - Generic symbol table
-template <typename T>
+template <typename TKey, typename T>
 class SymbolTable {
-    std::unordered_map<std::string, std::unique_ptr<T>> table;
+    std::unordered_map<TKey, std::unique_ptr<T>> table;
 
 public:
-    void addElement(std::string id,T element) {
+    void addElement(TKey id,T element) {
         if(table.contains(id))
             throw ExistingIDException(id);
         else
             table.emplace(id, std::make_unique<T>(std::move(element)));
    }
 
-    T getElement(std::string id) {
+    T getElement(TKey id) {
         if(!table.contains(id))
             throw IDNotFoundException(id);
         else
             return *table.at(id);
     }
 
-    void updateElement(std::string id, T element) {
+    void updateElement(TKey id, T element) {
         if (!table.contains(id))
             throw IDNotFoundException(id);
         else
@@ -38,7 +38,9 @@ public:
 
     }
 
-
+    bool contains(TKey id){
+        return table.contains(id);
+    }
 
 };
 
