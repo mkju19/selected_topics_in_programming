@@ -21,7 +21,7 @@ public:
     double getRate() const { return lambda;}
     std::vector<std::string> getInputIds() const{return input;}
     std::vector<std::string> getproductIds() const{return product;}
-
+    std::string toString() const;
     //REQUIREMENT 2a - Pretty printer in human readable format
     friend std::ostream& operator<< (std::ostream &out, Reaction const& reaction);
 };
