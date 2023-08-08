@@ -3,30 +3,33 @@
 //
 
 #include <random>
-#include <float.h>
+#include <cfloat>
+#include <iostream>
 #include "Simulator.h"
 #include "../Reaction/Reaction.h"
-#include "../SymbolTable.h"
+
 #include "../Reaction/Agent.h"
 
 double Simulator::calculateDelay(const Reaction &reaction, std::mt19937& gen) {
     double lambdaK = reaction.getRate();
 
     for(auto const& inputId : reaction.getInputIds()){
-        lambdaK *= agents->getElement(inputId).getValue();
+        lambdaK *= agents.getElement(inputId).getValue();
     }
 
     std::exponential_distribution<double> d(lambdaK);
-    return d(gen);
+    auto res = d(gen);
+    return res;
 }
 
 void Simulator::addAgent(const Agent &agent) {
-    agents->addElement(agent.getId(), agent);
+    auto id = agent.getId();
+    agents.addElement(id, agent);
 }
 
 void Simulator::addReaction(Reaction &reaction) {
     for(auto agent : reaction.getInputIds()){
-        if (!agents->contains(agent)){
+        if (!agents.contains(agent)){
             throw IDNotFoundException(agent);
         }
     }
@@ -34,10 +37,10 @@ void Simulator::addReaction(Reaction &reaction) {
 }
 
 void Simulator::updateAgent(const std::string &id, int value) {
-    auto agent = agents->getElement(id);
+    auto agent = agents.getElement(id);
     auto newVal = agent.getValue() + value;
     agent.setValue(newVal);
-    agents->updateElement(id, agent);
+    agents.updateElement(id, agent);
 }
 
 void Simulator::increment(const std::string& id, int amount) {
@@ -48,19 +51,19 @@ void Simulator::decrement(const std::string &id, int amount) {
     updateAgent(id, -amount);
 }
 
-void Simulator::react(Reaction &reaction, std::mt19937 gen) {
-    for(auto reactantId : reaction.getInputIds()){
-        decrement(reactantId, 1);
-    }
-    for(auto productId : reaction.getproductIds()){
-        increment(productId, 1);
+void Simulator::react(const Reaction &reaction) {
+    if (canReact(reaction)) {
+        for (const auto &reactantId: reaction.getInputIds()) {
+            decrement(reactantId, delta);
+        }
+        for (const auto &productId: reaction.getproductIds()) {
+            increment(productId, delta);
+        }
     }
 
-    elapsedTime = elapsedTime + reaction.getDelay();
-    calculateDelay(reaction, gen);
 }
 
-Reaction &Simulator::minDelay() {
+Reaction &Simulator::minDelayReaction() {
     auto minVal = DBL_MAX;
     int minIndex = 0;
     for(auto i = 0; i<reactions.size(); i++){
@@ -70,18 +73,47 @@ Reaction &Simulator::minDelay() {
     return reactions.at(minIndex);
 }
 
-void Simulator::run(const double& endTime) {
+std::vector<std::vector<std::string>> Simulator::run(const double& endTime) {
     std::random_device rd;
     std::mt19937 gen(rd());
 
+    auto result = std::vector<std::vector<std::string>>{};
+
+
     while(elapsedTime < endTime){
-        for(auto reaction : reactions){
+        for(auto& reaction : reactions){
             reaction.setDelay(calculateDelay(reaction, gen));
         }
-        auto minDelayReaction = minDelay();
-        react(minDelayReaction, gen);
+
+        auto nextReaction = minDelayReaction();
+        elapsedTime += nextReaction.getDelay();
+        react(nextReaction);
+        ObserveState(nextReaction);
     }
+    return result;
 }
+
+void Simulator::ObserveState(const Reaction& reaction) const {
+    std::cout   << reaction << std::endl
+                << "Elapsed time:" << elapsedTime << std::endl
+                << "| ";
+    for(const auto& [key, agent]  : agents){
+        std::cout << *agent << " | ";
+    }
+    std::cout << std::endl;
+}
+
+bool Simulator::canReact(const Reaction &reaction) const {
+
+    for(const auto &agentId : reaction.getInputIds()){
+        auto agentValue = agents.getElement(agentId).getValue();
+        if (agentValue < delta){
+            return false;
+        }
+    }
+    return true;
+}
+
 
 
 

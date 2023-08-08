@@ -4,6 +4,7 @@
 #include "Include/Reaction/Rule.h"
 #include "Include/Reaction/ReactionComponent.h"
 #include "Include/SymbolTable.h"
+#include "Include/Simulator/Simulator.h"
 #include <graphviz/gvc.h>
 #include "graphviz/cgraph.h"
 
@@ -16,25 +17,19 @@ void createNode(Agraph_t *g, std::string &name, std::string &fillColor, const st
 }
 
 int main() {
-    auto a = Agent("aa", 1);
+    auto a = Agent("a", 100);
     auto b = Agent("b", 2);
     auto c = Agent("c", 3);
     auto rule1 = Rule(a >>=  a + c);
     auto reaction = Reaction(a + b >>= c + b, 0.4);
-//    std::cout << "Rule1 input: " << rule1.getInputAgents().at(0).get()->getId() << std::endl;
-//    std::cout << "Rule1 product: " << rule1.getOutputAgents().at(1).get()->getId() << std::endl;
+    auto sim = Simulator();
+    sim.addAgent(a);
+    sim.addAgent(b);
+    sim.addAgent(c);
+    sim.addReaction(reaction);
+    sim.run(100);
 
-    auto symbolTable = SymbolTable<std::string, Agent>{};
-    auto symbolTableR = SymbolTable<std::string, Reaction>{};
 
-    symbolTableR.addElement("reaction1", reaction);
-
-
-    symbolTable.addElement(a.getId(), a);
-    a.setValue(2);
-//    symbolTable.updateElement(a.getId(), a);
-    std::cout << symbolTable.getElement(a.getId()) << std::endl;
-    std::cout << symbolTableR.getElement("reaction1") << std::endl;
 
 //    GVC_t *gvc = gvContext();
 //    Agraph_t *g = agopen((char*)"g", Agdirected, nullptr);

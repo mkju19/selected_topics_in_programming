@@ -23,7 +23,7 @@ public:
             table.emplace(id, std::make_unique<T>(std::move(element)));
    }
 
-    T getElement(TKey id) {
+    T getElement(TKey id) const {
         if(!table.contains(id))
             throw IDNotFoundException(id);
         else
@@ -41,6 +41,11 @@ public:
     bool contains(TKey id){
         return table.contains(id);
     }
+
+    auto begin() {return table.begin();}
+    auto end() { return table.end();}
+    auto begin() const { return table.begin();}
+    auto end() const { return table.end(); }
 
 };
 

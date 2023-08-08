@@ -3,31 +3,37 @@
 
 #include <memory>
 #include <vector>
+#include <random>
+#include "../SymbolTable.h"
 
-template <typename TKey, typename T>
-class SymbolTable;
 class Agent;
 class Reaction;
 
 using AgentSymbolTable = std::unique_ptr<SymbolTable<std::string, Agent>>;
 
 class Simulator {
-AgentSymbolTable agents;
-std::vector<Reaction> reactions;
-double elapsedTime = 0;
+    SymbolTable<std::string, Agent> agents;
+    std::vector<Reaction> reactions;
+    double elapsedTime = 0;
+    int delta = 1;
 
 
-double calculateDelay(const Reaction& reaction, std::mt19937& gen);
-void react(Reaction& reaction, std::mt19937 gen);
-void increment(const std::string& id, int amount);
-void decrement(const std::string& id, int amount);
-void updateAgent(const std::string& id, int value);
-Reaction& minDelay();
+    double calculateDelay(const Reaction& reaction, std::mt19937& gen);
+    void react(const Reaction& reaction);
+    void increment(const std::string& id, int amount);
+    void decrement(const std::string& id, int amount);
+    void updateAgent(const std::string& id, int value);
+    Reaction& minDelayReaction();
+    void ObserveState(const Reaction& reaction) const;
+    bool canReact(const Reaction& reaction) const;
+    std::vector<std::string> vectorizeReaction (const Reaction& reaction) const;
 
-void addReaction(Reaction& reaction);
-void addAgent(const Agent& agent);
+public:
+    void addReaction(Reaction& reaction);
+    void addAgent(const Agent& agent);
 
-void run(const double& endTime);
+//    void run(const double& endTime);
+    std::vector<std::vector<std::string>> run(const double& endTime);
 
 };
 
