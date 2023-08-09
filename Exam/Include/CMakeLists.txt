@@ -11,4 +11,5 @@ add_library(
         SymbolTable.h
         Exceptions.h
         Simulator/Simulator.cpp
-        Simulator/Simulator.h)
+        Simulator/Simulator.h
+)

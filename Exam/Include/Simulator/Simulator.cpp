@@ -59,7 +59,6 @@ void Simulator::react(const Reaction &reaction) {
             increment(productId, delta);
         }
     }
-
 }
 
 Reaction &Simulator::minDelayReaction() {
@@ -75,8 +74,7 @@ Reaction &Simulator::minDelayReaction() {
     return reactions.at(minIndex);
 }
 
-//template <Observable Obs>
-//void Simulator::run(const double& endTime, Obs& observer) {
+
 void Simulator::run(const double &endTime, const std::function<void(std::vector<std::string>)> &observer) {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -91,10 +89,8 @@ void Simulator::run(const double &endTime, const std::function<void(std::vector<
         react(nextReaction);
         auto vectorizedReaction =vectorizeReaction(nextReaction);
 
-//        observer.observe(vectorizedReaction);
         observer(vectorizedReaction);
     }
-//    observer.stop();
 }
 
 bool Simulator::canReact(const Reaction &reaction) const {

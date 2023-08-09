@@ -1,24 +1,26 @@
 #include <iostream>
+#include <memory>
 #include "Include/Reaction/Agent.h"
 #include "Include/Reaction/Reaction.h"
 #include "Include/Reaction/Rule.h"
 #include "Include/Reaction/ReactionComponent.h"
 #include "Include/SymbolTable.h"
 #include "Include/Simulator/Simulator.h"
-//#include "Observer.h"
+
 //#include <graphviz/gvc.h>
 //#include "graphviz/cgraph.h"
 
 
 struct obs {
-    void observe(std::vector<std::string> vec){
-        std::cout<< "| ";
+
+    void observe(std::vector<std::string> vec) const{
+        std::cout<< "; ";
         for (const auto& item: vec){
-            std::cout << item << " | ";
+            std::cout << item << " ; ";
         }
         std::cout<< std::endl;
-    }
-    void stop(){}
+    };
+    void stop(){std::cout << "stopped" << std::endl;}
 };
 
 //void createNode(Agraph_t *g, std::string &name, std::string &fillColor, const std::string &shape){
@@ -51,13 +53,15 @@ int main() {
 //    vec.push_back("bb");
 //    observer.observe(vec);
 //    observer.stop();
+
+    auto observer = obs{};
     auto sim = Simulator{};
     sim.addAgent(a);
     sim.addAgent(b);
     sim.addAgent(c);
     sim.addReaction(reaction1);
     sim.addReaction(reaction2);
-    auto observer = obs{};
+
     sim.run(100, printVector);
 
 
