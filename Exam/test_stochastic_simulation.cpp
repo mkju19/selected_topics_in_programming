@@ -10,6 +10,7 @@
 #include "Include/Reaction/Rule.h"
 #include "Include/Reaction/Reaction.h"
 #include "Include/SymbolTable.h"
+#include "Include/Simulator/Simulator.h"
 TEST_CASE("Test reactions")
 {
     auto a = Agent("a", 1);
@@ -75,5 +76,10 @@ TEST_CASE("Test Symbol table"){
     SUBCASE("Test that symbol table throws an exception when trying to update an element the does not exist"){
         CHECK_THROWS(symbolTable.updateElement("a", a));
     }
+
+}
+
+TEST_CASE("Test simulator"){
+    auto sim = Simulator{};
 
 }
