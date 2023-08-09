@@ -7,6 +7,7 @@
 #include <functional>
 #include "../SymbolTable.h"
 
+class StateObserver;
 class Agent;
 class Reaction;
 
@@ -40,7 +41,9 @@ public:
     void addReaction(Reaction& reaction);
     void addAgent(const Agent& agent);
 
-    void run(const double& endTime, const std::function<void(std::vector<std::string>)> &observer);
+//    void run(const double& endTime, const std::function<void(std::vector<std::string>)> &observer);
+
+    void run(const double& endTime, StateObserver &observer);
 
 };
 

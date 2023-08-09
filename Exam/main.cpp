@@ -6,21 +6,33 @@
 #include "Include/Reaction/ReactionComponent.h"
 #include "Include/SymbolTable.h"
 #include "Include/Simulator/Simulator.h"
+#include "Include/Simulator/StateObserver.h"
 
 //#include <graphviz/gvc.h>
 //#include "graphviz/cgraph.h"
 
 
-struct obs {
+class Obs : public StateObserver{
+    std::vector<std::vector<std::string>> lines;
 
-    void observe(std::vector<std::string> vec) const{
-        std::cout<< "; ";
+    void printVector(std::vector<std::string> vec){
+        std::cout<< "| ";
         for (const auto& item: vec){
-            std::cout << item << " ; ";
+            std::cout << item << " | ";
         }
         std::cout<< std::endl;
+    }
+public:
+    void observe(std::vector<std::string> vec) override{
+        lines.push_back(vec);
     };
-    void stop(){std::cout << "stopped" << std::endl;}
+    void stop() override {
+        std::cout<< "STARTS PRINTING" << std::endl;
+        for (auto &line : lines){
+            printVector(line);
+        }
+        std::cout << "STOP PRINTING" << std::endl;
+    }
 };
 
 //void createNode(Agraph_t *g, std::string &name, std::string &fillColor, const std::string &shape){
@@ -30,13 +42,7 @@ struct obs {
 //    agsafeset(node, (char *) "shape", (char *) shape.c_str(), (char *) "");
 //}
 
-void printVector(std::vector<std::string> vec){
-    std::cout<< "| ";
-    for (const auto& item: vec){
-        std::cout << item << " | ";
-    }
-    std::cout<< std::endl;
-}
+
 
 
 
@@ -54,15 +60,14 @@ int main() {
 //    observer.observe(vec);
 //    observer.stop();
 
-    auto observer = obs{};
     auto sim = Simulator{};
     sim.addAgent(a);
     sim.addAgent(b);
     sim.addAgent(c);
     sim.addReaction(reaction1);
     sim.addReaction(reaction2);
-
-    sim.run(100, printVector);
+    auto observer = Obs{};
+    sim.run(100, observer);
 
 
 

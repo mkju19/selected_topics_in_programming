@@ -8,6 +8,7 @@
 #include "Simulator.h"
 #include "../Reaction/Reaction.h"
 #include "../Reaction/Agent.h"
+#include "StateObserver.h"
 
 double Simulator::calculateDelay(const Reaction &reaction, std::mt19937& gen) {
     double lambdaK = reaction.getRate();
@@ -75,7 +76,7 @@ Reaction &Simulator::minDelayReaction() {
 }
 
 
-void Simulator::run(const double &endTime, const std::function<void(std::vector<std::string>)> &observer) {
+void Simulator::run(const double &endTime, StateObserver &observer) {
     std::random_device rd;
     std::mt19937 gen(rd());
 
@@ -89,8 +90,9 @@ void Simulator::run(const double &endTime, const std::function<void(std::vector<
         react(nextReaction);
         auto vectorizedReaction =vectorizeReaction(nextReaction);
 
-        observer(vectorizedReaction);
+        observer.observe(vectorizedReaction);
     }
+    observer.stop();
 }
 
 bool Simulator::canReact(const Reaction &reaction) const {
