@@ -1,10 +1,4 @@
 #include <iostream>
-#include "Include/Reaction/Agent.h"
-#include "Include/Reaction/Reaction.h"
-#include "Include/Reaction/Rule.h"
-#include "Include/Reaction/ReactionComponent.h"
-//#include "Include/SymbolTable.h"
-#include "Include/Simulator/Simulator.h"
 #include "Include/Simulator/StateObserver.h"
 #include "Examples/SimpleExample.h"
 #include "Examples/CircadianRythmExample.h"
@@ -49,14 +43,45 @@ class Counter : public StateObserver{
     }
 };
 
+class PeakHospitalized : public StateObserver{
+    size_t peak = 0;
+    void observe(const std::vector<std::string>& vec)override{
+        for(const auto &element : vec){
+            //The hospitalized variable will have H: as the first to chars in the string
+            if (element.at(0) == 'H' && element.at(1) == ':'){
+                auto val_str = element.substr(2);
+
+                auto val = std::stoi(val_str);
+
+                peak = val > peak ? val : peak;
+            }
+        }
+    }
+    void stop() override{
+        std::cout<< "The peak of hospitalized agents is: " << peak << std::endl;
+    }
+};
+
 int main() {
     auto observerPrinter = Printer{};
     SimpleExample::run(observerPrinter);
-    
-    auto observerCounter = Counter{};
-    CircadianRythmExample::run(observerCounter);
 
-    CovidExample::run(observerCounter, 10'000);
+//    auto observerCounter = Counter{};
+//    CircadianRythmExample::run(observerCounter);
+
+    int N = 10'000;
+    std::cout << "---- Covid example with a population " << N << " ----" << std::endl;
+    auto observerPeak = PeakHospitalized{};
+    CovidExample::run(observerPeak, N);
+
+//    int N_NJ = 589'755;
+//    std::cout << "---- Covid example with a population " << N_NJ << " ----" << std::endl;
+//    CovidExample::run(observerPeak, N_NJ);
+//
+//    int N_DK = 5'822'763;
+//    std::cout << "---- Covid example with a population " << N_DK << " ----" << std::endl;
+//    CovidExample::run(observerPeak, N_DK);
+
 
 //    auto a = Agent("a", 1);
 //    auto b = Agent("b", 60);
