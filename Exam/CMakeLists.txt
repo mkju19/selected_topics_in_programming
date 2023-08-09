@@ -22,12 +22,14 @@ link_directories(${GRAPHVIZ_LIBRARY_DIR})
 
 
 add_subdirectory(Include)
+add_subdirectory(Examples)
 
 
 add_executable(Main main.cpp)
 add_executable(Test_stochastic_simulation test_stochastic_simulation.cpp)
 
-target_link_libraries(Main PRIVATE Include cgraph gvc)
+target_link_libraries(Examples PRIVATE Include)
+target_link_libraries(Main PRIVATE Include Examples cgraph gvc)
 TARGET_LINK_LIBRARIES(Test_stochastic_simulation PRIVATE Include doctest::doctest)
 
 enable_testing()
