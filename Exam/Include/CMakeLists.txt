@@ -8,4 +8,7 @@ add_library(
         Reaction/ReactionComponent.h
         Reaction/Rule.cpp
         Reaction/Rule.h
-        SymbolTable.h Exceptions.h Simulator/Simulator.cpp Simulator/Simulator.h)
+        SymbolTable.h
+        Exceptions.h
+        Simulator/Simulator.cpp
+        Simulator/Simulator.h)

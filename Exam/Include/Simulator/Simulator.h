@@ -10,6 +10,12 @@
 class Agent;
 class Reaction;
 
+template <typename T>
+concept Observable = requires(T obj, std::vector<std::string> vec){
+    {obj.observe(vec)} -> std::same_as<void>;
+    {obj.stop()} -> std::same_as<void>;
+};
+
 using AgentSymbolTable = std::unique_ptr<SymbolTable<std::string, Agent>>;
 
 class Simulator {
@@ -36,6 +42,8 @@ public:
 //    void run(const double& endTime);
     void run(const double& endTime, const std::function<void(std::vector<std::string>)> &observer);
 
+//    template <Observable Obs>
+//    void run(const double& endTime, Obs& observer);
 };
 
 
