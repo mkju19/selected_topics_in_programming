@@ -16,7 +16,7 @@ public:
     Reaction(const Rule& rule, double lambda);
     Reaction() = default;
 
-    double getDelay(){return delay;}
+    double getDelay() const{return delay;}
     void setDelay(double d){delay = d;};
     double getRate() const { return lambda;}
     std::vector<std::string> getInputIds() const{return input;}

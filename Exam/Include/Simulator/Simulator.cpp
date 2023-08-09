@@ -67,8 +67,11 @@ Reaction &Simulator::minDelayReaction() {
     auto minVal = DBL_MAX;
     int minIndex = 0;
     for(auto i = 0; i<reactions.size(); i++){
-        if (reactions.at(i).getDelay() <= minVal)
+        auto delayValue = reactions.at(i).getDelay();
+        if ( delayValue <= minVal) {
+            minVal = delayValue;
             minIndex = i;
+        }
     }
     return reactions.at(minIndex);
 }
@@ -106,6 +109,7 @@ std::vector<std::string> Simulator::vectorizeReaction(const Reaction& reaction) 
     std::vector<std::string> vec;
     vec.push_back(std::to_string(elapsedTime));
     vec.push_back(reaction.toString());
+    vec.push_back(std::to_string(reaction.getDelay()));
     for(const auto& [key, agent_ptr] : agents){
         vec.push_back(agent_ptr->toString());
     }

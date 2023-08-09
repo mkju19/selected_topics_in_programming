@@ -25,17 +25,19 @@ void printVector(std::vector<std::string> vec){
 }
 
 int main() {
-    auto a = Agent("a", 100);
-    auto b = Agent("b", 2);
-    auto c = Agent("c", 3);
+    auto a = Agent("a", 1);
+    auto b = Agent("b", 60);
+    auto c = Agent("c", 50);
     auto rule1 = Rule(a >>=  a + c);
-    auto reaction = Reaction(a + b >>= c + b, 0.4);
-    auto sim = Simulator();
+    auto reaction1 = Reaction(a + b >>= c + b, 10);
+    auto reaction2 = Reaction(b + c >>= a + c, 5);
+    auto sim = Simulator{};
     sim.addAgent(a);
     sim.addAgent(b);
     sim.addAgent(c);
-    sim.addReaction(reaction);
-    sim.run(6, printVector);
+    sim.addReaction(reaction1);
+    sim.addReaction(reaction2);
+    sim.run(100, printVector);
 
 
 
