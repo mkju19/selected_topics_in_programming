@@ -9,7 +9,7 @@
 #include "../Include/Reaction/Reaction.h"
 #include "../Include/Simulator/Simulator.h"
 
-void CircadianRythmExample::run() {
+void CircadianRythmExample::run(StateObserver& observer) {
     auto sim = Simulator{};
 
     auto alphaA = 50.0;

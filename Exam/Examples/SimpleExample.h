@@ -9,10 +9,8 @@
 #include "..//Include/Simulator/StateObserver.h"
 
 class SimpleExample {
-    StateObserver observer;
 public:
-    void run();
-    explicit SimpleExample(StateObserver  obs): observer(std::move(obs)){};
+    static void run(StateObserver& obs);
 };
 
 

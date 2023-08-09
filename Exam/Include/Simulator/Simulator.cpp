@@ -27,7 +27,7 @@ void Simulator::addAgent(const Agent &agent) {
     agents.addElement(id, agent);
 }
 
-void Simulator::addReaction(Reaction &reaction) {
+void Simulator::addReaction(const Reaction &reaction) {
     for(auto agent : reaction.getInputIds()){
         if (!agents.contains(agent)){
             throw IDNotFoundException(agent);

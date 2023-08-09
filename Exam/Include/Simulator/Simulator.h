@@ -6,10 +6,11 @@
 #include <random>
 #include <functional>
 #include "../SymbolTable.h"
+//#include "../Reaction/Agent.h"
 
 class StateObserver;
-class Agent;
 class Reaction;
+class Agent;
 
 // THIS SHOULD WORK BUT IT DOESN'T
 // probably linking errors
@@ -38,7 +39,7 @@ class Simulator {
     std::vector<std::string> vectorizeReaction (const Reaction& reaction) const;
 
 public:
-    void addReaction(Reaction& reaction);
+    void addReaction(const Reaction& reaction);
     void addAgent(const Agent& agent);
 
 //    void run(const double& endTime, const std::function<void(std::vector<std::string>)> &observer);

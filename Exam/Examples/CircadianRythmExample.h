@@ -4,13 +4,12 @@
 
 #ifndef EXAM_CIRCADIANRYTHMEXAMPLE_H
 #define EXAM_CIRCADIANRYTHMEXAMPLE_H
-#include "../Include/Simulator/StateObserver.h"
+
+class StateObserver;
 
 class CircadianRythmExample {
-    StateObserver observer;
 public:
-    void run();
-    explicit CircadianRythmExample(StateObserver  obs): observer(std::move(obs)){};
+    static void run(StateObserver& observer);
 };
 
 

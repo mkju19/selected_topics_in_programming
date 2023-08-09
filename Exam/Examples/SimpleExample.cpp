@@ -8,7 +8,7 @@
 #include "../Include/Reaction/Rule.h"
 #include "../Include/Reaction/Reaction.h"
 #include "../Include/Simulator/Simulator.h"
-void SimpleExample::run() {
+void SimpleExample::run(StateObserver& observer) {
     auto sim = Simulator{};
 
     auto a = Agent{"a", 100};
