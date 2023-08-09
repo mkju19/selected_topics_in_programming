@@ -14,7 +14,7 @@
 //#include "graphviz/cgraph.h"
 
 
-class ObserverPrinter : public StateObserver{
+class Printer : public StateObserver{
     std::vector<std::vector<std::string>> lines;
 
     void printVector(const std::vector<std::string>& vec){
@@ -25,28 +25,38 @@ class ObserverPrinter : public StateObserver{
         std::cout<< std::endl;
     }
 public:
-    void observe(std::vector<std::string> vec) override{
+    void observe(const std::vector<std::string>& vec) override{
         lines.push_back(vec);
     };
     void stop() override {
         std::cout<< "STARTS PRINTING" << std::endl;
-        for (auto &line : lines){
+        for (const auto &line : lines){
             printVector(line);
         }
         std::cout << "STOP PRINTING" << std::endl;
+        lines.clear();
     }
 };
 
+class Counter : public StateObserver{
+    size_t numberOfReactions = 0;
+    void observe(const std::vector<std::string>& vec) override{
+        numberOfReactions++;
+    }
+    void stop() override{
+        std::cout<< "Counted " << numberOfReactions << " reactions." << std::endl;
+        numberOfReactions = 0;
+    }
+};
 
 int main() {
-    auto obs = ObserverPrinter{};
-    SimpleExample::run(obs);
+    auto observerPrinter = Printer{};
+    SimpleExample::run(observerPrinter);
+    
+    auto observerCounter = Counter{};
+    CircadianRythmExample::run(observerCounter);
 
-//    auto obs = ObserverPrinter{};
-//    CircadianRythmExample::run(obs);
-
-//    auto obs = ObserverPrinter{};
-//    CovidExample::run(obs, 10'000);
+    CovidExample::run(observerCounter, 10'000);
 
 //    auto a = Agent("a", 1);
 //    auto b = Agent("b", 60);
@@ -61,7 +71,7 @@ int main() {
 //    sim.addAgent(c);
 //    sim.addReaction(reaction1);
 //    sim.addReaction(reaction2);
-//    auto observer = ObserverPrinter{};
+//    auto observer = Printer{};
 //    sim.run(100, observer);
 
     return 0;

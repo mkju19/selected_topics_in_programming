@@ -11,7 +11,7 @@
 #include <iostream>
 
 struct StateObserver {
-    virtual void observe(std::vector<std::string> vec){
+    virtual void observe(const std::vector<std::string>& vec){
         std::cout<< "| ";
         for (const auto& item: vec){
             std::cout << item << " | ";
