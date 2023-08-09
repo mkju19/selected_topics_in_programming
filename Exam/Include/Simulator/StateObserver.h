@@ -21,6 +21,7 @@ struct StateObserver {
     virtual void stop(){
         std::cout<< "stopped" << std::endl;
     }
+    virtual ~StateObserver()=default;
 };
 
 
