@@ -8,6 +8,7 @@
 #include "Include/Simulator/StateObserver.h"
 #include "Examples/SimpleExample.h"
 #include "Examples/CircadianRythmExample.h"
+#include "Examples/CovidExample.h"
 
 //#include <graphviz/gvc.h>
 //#include "graphviz/cgraph.h"
@@ -41,8 +42,11 @@ int main() {
     auto obs = ObserverPrinter{};
     SimpleExample::run(obs);
 
-//    obs = ObserverPrinter{};
+//    auto obs = ObserverPrinter{};
 //    CircadianRythmExample::run(obs);
+
+//    auto obs = ObserverPrinter{};
+//    CovidExample::run(obs, 10'000);
 
 //    auto a = Agent("a", 1);
 //    auto b = Agent("b", 60);
