@@ -18,8 +18,14 @@ struct StateObserver {
         }
         std::cout<< std::endl;
     }
+    virtual void observeParallel(const std:: vector<std::string>& vec, int id){
+        observe(vec);
+    }
     virtual void stop(){
         std::cout<< "stopped" << std::endl;
+    }
+    virtual void stopParallel(){
+        stop();
     }
     virtual ~StateObserver()=default;
 };

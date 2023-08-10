@@ -14,4 +14,5 @@ add_library(
         Simulator/Simulator.h
         Simulator/StateObserver.h
         Simulator/ParallelSimulator.cpp
-        Simulator/ParallelSimulator.h)
+        Simulator/ParallelSimulator.h
+)

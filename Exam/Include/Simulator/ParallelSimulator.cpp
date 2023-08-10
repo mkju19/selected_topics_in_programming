@@ -10,24 +10,24 @@
 void ParallelSimulator::run(const double endTime, StateObserver& observer, int numberOfThreads) {
     auto threads = std::vector<std::jthread>{};
     for(auto i = 0; i < numberOfThreads; i++){
-        auto handle = std::jthread{&ParallelSimulator::simulate, this, endTime, std::ref(observer), Simulator{sim}};
+        auto handle = std::jthread{&ParallelSimulator::simulate, this, endTime, std::ref(observer), Simulator{sim}, i};
         threads.push_back(std::move(handle));
     }
 
     for(auto& thread : threads){
         thread.join();
     }
-    observer.stop();
+    observer.stopParallel();
 }
 
-void ParallelSimulator::simulate(const double endTime, StateObserver& observer, Simulator simulator) {
-    auto obs = ParallelObserver{};
+void ParallelSimulator::simulate(const double endTime, StateObserver& observer, Simulator simulator, int id) {
+    auto obs = SimulationObserver{};
 
     simulator.run(endTime, obs);
 
     while (!obs.queueEmpty()){
             std::scoped_lock lock(mut);
-            observer.observe(obs.popQueue());
+            observer.observeParallel(obs.popQueue(), id);
     }
 }
 

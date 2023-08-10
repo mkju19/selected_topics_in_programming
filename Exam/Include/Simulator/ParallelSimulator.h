@@ -12,15 +12,13 @@ using resultQueue_t = std::queue<std::vector<std::string>>;
 class ParallelSimulator {
 
     std::mutex mut;
-//    StateObserver observer;
     Simulator sim;
 
-    class ParallelObserver: public StateObserver{
+    class SimulationObserver: public StateObserver{
         bool stopped = false;
         resultQueue_t queue;
     public:
-        bool isStopped(){return stopped;}
-        bool queueEmpty(){return queue.empty();}
+        [[nodiscard]] bool queueEmpty() const{return queue.empty();}
         std::vector<std::string> popQueue(){
             auto vec = queue.front();
             queue.pop();
@@ -34,11 +32,10 @@ class ParallelSimulator {
         }
     };
 
-    void simulate(double endTime, StateObserver& observer, Simulator simulator);
+    void simulate(double endTime, StateObserver& observer, Simulator simulator, int id);
 
 public:
-    ParallelSimulator(const Simulator& simulator/*, const StateObserver&  obs*/) : /*observer(obs),*/
-                                                                               sim(simulator){};
+    explicit ParallelSimulator(const Simulator& simulator) : sim(simulator){};
     void run(double endTime, StateObserver& observer, int numberOfThreads);
 
 };

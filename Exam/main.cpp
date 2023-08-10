@@ -43,7 +43,8 @@ class Counter : public StateObserver{
     }
 };
 
-class PeakHospitalized : public StateObserver{
+class AveragePeakHospitalized : public StateObserver {
+    std::unordered_map<int, int> peaks;
     size_t peak = 0;
     void observe(const std::vector<std::string>& vec)override{
         for(const auto &element : vec){
@@ -59,6 +60,32 @@ class PeakHospitalized : public StateObserver{
     }
     void stop() override{
         std::cout<< "The peak of hospitalized agents is: " << peak << std::endl;
+        peak = 0;
+    }
+    void observeParallel(const std::vector<std::string> &vec, int id) override{
+        for(const auto &element : vec){
+            //The hospitalized variable will have H: as the first to chars in the string
+            if (element.at(0) == 'H' && element.at(1) == ':'){
+                auto val_str = element.substr(2);
+                auto val = std::stoi(val_str);
+
+                if(peaks.contains(id)){
+                    auto old = peaks.at(id);
+                    peaks.at(id) = val > old ? val : old;
+                } else {
+                    peaks.emplace(id, val);
+                }
+            }
+        }
+    }
+    void stopParallel() override{
+        auto size = peaks.size();
+        auto sum = 0;
+        for(const auto& [id, val] : peaks){
+            sum += val;
+        }
+        std::cout << "The estimated average peak hospitalized over " << size << " simulations: " << sum/size << std::endl;
+        peaks.clear();
     }
 };
 
@@ -68,16 +95,18 @@ int main() {
     SimpleExample::run(observerCounter);
     SimpleExample::runParallel(observerCounter, 10);
 
-
-
 //    auto observerCounter = Counter{};
 //    CircadianRythmExample::run(observerCounter);
 
     int N = 10'000;
     std::cout << "---- Covid example with a population " << N << " ----" << std::endl;
-    auto observerPeak = PeakHospitalized{};
+    auto observerPeak = AveragePeakHospitalized{};
+    std::cout << "running a single simulation." << std::endl;
     CovidExample::run(observerPeak, N);
-    CovidExample::runParallel(observerPeak, 100, N);
+
+    auto numberOfSims = 100;
+    std::cout << "running " << numberOfSims << " simulations in parallel." << std::endl;
+    CovidExample::runParallel(observerPeak, numberOfSims, N);
 
 //    int N_NJ = 589'755;
 //    std::cout << "---- Covid example with a population " << N_NJ << " ----" << std::endl;
@@ -86,24 +115,6 @@ int main() {
 //    int N_DK = 5'822'763;
 //    std::cout << "---- Covid example with a population " << N_DK << " ----" << std::endl;
 //    CovidExample::run(observerPeak, N_DK);
-
-
-//    auto a = Agent("a", 1);
-//    auto b = Agent("b", 60);
-//    auto c = Agent("c", 50);
-//    auto rule1 = Rule(a >>=  a + c);
-//    auto reaction1 = Reaction(a + b >>= c + b, 10);
-//    auto reaction2 = Reaction(b + c >>= a + c, 5);
-//
-//    auto sim = Simulator{};
-//    sim.addAgent(a);
-//    sim.addAgent(b);
-//    sim.addAgent(c);
-//    sim.addReaction(reaction1);
-//    sim.addReaction(reaction2);
-//    auto observer = Printer{};
-//    sim.run(100, observer);
-
     return 0;
 }
 
