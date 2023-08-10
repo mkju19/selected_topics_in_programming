@@ -12,8 +12,12 @@
 #include "../Include/Reaction/Reaction.h"
 #include "../Include/Simulator/Simulator.h"
 #include "../Include/Simulator/StateObserver.h"
+#include "../Include/Simulator/ParallelSimulator.h"
 
 struct SimpleExample {
+private:
+    static const int endTime = 2000;
+public:
     static void run(StateObserver& observer){
         auto sim = Simulator{};
 
@@ -26,7 +30,22 @@ struct SimpleExample {
 
         sim.addReaction(Reaction(a + c >>= b + c, 0.001));
 
-        sim.run(2000, observer);
+        sim.run(endTime, observer);
+    };
+    static void runParallel(StateObserver& observer, int numberOfThreads) {
+        auto sim = Simulator{};
+
+        auto a = Agent{"a", 100};
+        auto b = Agent{"b", 0};
+        auto c = Agent{"c", 1};
+        sim.addAgent(a);
+        sim.addAgent(b);
+        sim.addAgent(c);
+
+        sim.addReaction(Reaction(a + c >>= b + c, 0.001));
+
+        auto parallelSim = ParallelSimulator{sim};
+        parallelSim.run(endTime, observer, numberOfThreads);
     };
 };
 

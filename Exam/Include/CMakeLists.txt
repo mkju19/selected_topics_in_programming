@@ -12,4 +12,6 @@ add_library(
         Exceptions.h
         Simulator/Simulator.cpp
         Simulator/Simulator.h
-        Simulator/StateObserver.h)
+        Simulator/StateObserver.h
+        Simulator/ParallelSimulator.cpp
+        Simulator/ParallelSimulator.h)

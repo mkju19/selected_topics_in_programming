@@ -64,7 +64,11 @@ class PeakHospitalized : public StateObserver{
 
 int main() {
     auto observerPrinter = Printer{};
-    SimpleExample::run(observerPrinter);
+    auto observerCounter = Counter{};
+    SimpleExample::run(observerCounter);
+    SimpleExample::runParallel(observerCounter, 10);
+
+
 
 //    auto observerCounter = Counter{};
 //    CircadianRythmExample::run(observerCounter);
@@ -73,6 +77,7 @@ int main() {
     std::cout << "---- Covid example with a population " << N << " ----" << std::endl;
     auto observerPeak = PeakHospitalized{};
     CovidExample::run(observerPeak, N);
+    CovidExample::runParallel(observerPeak, 100, N);
 
 //    int N_NJ = 589'755;
 //    std::cout << "---- Covid example with a population " << N_NJ << " ----" << std::endl;

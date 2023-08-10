@@ -1,7 +1,3 @@
-//
-// Created by marco on 08-08-2023.
-//
-
 #include <random>
 #include <cfloat>
 #include <iostream>
@@ -115,6 +111,16 @@ std::vector<std::string> Simulator::vectorizeReaction(const Reaction& reaction) 
         vec.push_back(agent_ptr->toString());
     }
     return vec;
+}
+
+Simulator &Simulator::operator=(const Simulator &other) {
+    for(const auto& reaction: other.reactions){
+        reactions.push_back(reaction);
+    }
+    for(const auto& [id, agent]: other.agents){
+        agents.addElement(id, *agent);
+    }
+    return *this;
 }
 
 

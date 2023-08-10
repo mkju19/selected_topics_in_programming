@@ -34,15 +34,18 @@ class Simulator {
     void decrement(const std::string& id, int amount);
     void updateAgent(const std::string& id, int value);
     Reaction& minDelayReaction();
-    void ObserveState(const Reaction& reaction) const;
     bool canReact(const Reaction& reaction) const;
     std::vector<std::string> vectorizeReaction (const Reaction& reaction) const;
 
 public:
+    Simulator()=default;
+    Simulator(const Simulator& other){
+        *this = other;
+    };
+    Simulator& operator=(const Simulator& other);
+    ~Simulator()=default;
     void addReaction(const Reaction& reaction);
     void addAgent(const Agent& agent);
-
-//    void run(const double& endTime, const std::function<void(std::vector<std::string>)> &observer);
 
     void run(const double& endTime, StateObserver &observer);
 
