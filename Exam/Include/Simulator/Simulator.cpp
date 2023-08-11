@@ -76,6 +76,8 @@ void Simulator::run(const double &endTime, StateObserver &observer) {
     std::random_device rd;
     std::mt19937 gen(rd());
 
+    observer.observe(vectorizeState());
+
     while(elapsedTime < endTime){
         for(auto& reaction : reactions){
             reaction.setDelay(calculateDelay(reaction, gen));
@@ -84,9 +86,9 @@ void Simulator::run(const double &endTime, StateObserver &observer) {
         auto nextReaction = minDelayReaction();
         elapsedTime += nextReaction.getDelay();
         react(nextReaction);
-        auto vectorizedReaction =vectorizeReaction(nextReaction);
+        auto state = vectorizeState();
 
-        observer.observe(vectorizedReaction);
+        observer.observe(state);
     }
     observer.stop();
 }
@@ -102,11 +104,10 @@ bool Simulator::canReact(const Reaction &reaction) const {
     return true;
 }
 
-std::vector<std::string> Simulator::vectorizeReaction(const Reaction& reaction) const {
+std::vector<std::string> Simulator::vectorizeState() const {
     std::vector<std::string> vec;
     vec.push_back(std::to_string(elapsedTime));
-    vec.push_back(reaction.toString());
-    vec.push_back(std::to_string(reaction.getDelay()));
+
     for(const auto& [key, agent_ptr] : agents){
         vec.push_back(agent_ptr->toString());
     }

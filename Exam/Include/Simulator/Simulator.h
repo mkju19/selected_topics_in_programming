@@ -35,7 +35,7 @@ class Simulator {
     void updateAgent(const std::string& id, int value);
     Reaction& minDelayReaction();
     bool canReact(const Reaction& reaction) const;
-    std::vector<std::string> vectorizeReaction (const Reaction& reaction) const;
+    std::vector<std::string> vectorizeState () const;
 
 public:
     Simulator()=default;
