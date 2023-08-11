@@ -11,6 +11,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(BUILD_SHARED_LIBS OFF) # Stick with statically linked libraries
 
 include(doctest.cmake)
+include(benchmark.cmake)
 
 # Graphviz paths
 set(GRAPHVIZ_INCLUDE_DIR "C:/Program Files/Graphviz/include")
@@ -24,13 +25,14 @@ link_directories(${GRAPHVIZ_LIBRARY_DIR})
 add_subdirectory(Include)
 add_subdirectory(Examples)
 
-
-add_executable(Main main.cpp)
+add_executable(Main main.cpp Observers.h)
+add_executable(Benchmark benchmark.cpp Observers.h)
 add_executable(Test_stochastic_simulation test_stochastic_simulation.cpp)
 
 target_link_libraries(Examples PRIVATE Include)
 target_link_libraries(Main PRIVATE Include Examples cgraph gvc)
-TARGET_LINK_LIBRARIES(Test_stochastic_simulation PRIVATE Include doctest::doctest)
+target_link_libraries(Benchmark PRIVATE Include Examples benchmark::benchmark)
+TARGET_LINK_LIBRARIES(Test_stochastic_simulation PRIVATE Include Observers doctest::doctest)
 
 enable_testing()
 add_test(NAME Test_stochastic_simulation COMMAND Test_stochastic_simulation)
