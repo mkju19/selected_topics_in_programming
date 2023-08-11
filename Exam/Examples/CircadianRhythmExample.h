@@ -2,8 +2,8 @@
 // Created by marco on 09-08-2023.
 //
 
-#ifndef EXAM_CIRCADIANRYTHMEXAMPLE_H
-#define EXAM_CIRCADIANRYTHMEXAMPLE_H
+#ifndef EXAM_CIRCADIANRHYTHMEXAMPLE_H
+#define EXAM_CIRCADIANRHYTHMEXAMPLE_H
 
 #include "../Include/Reaction/Agent.h"
 #include "../Include/Reaction/ReactionComponent.h"
@@ -16,7 +16,7 @@
 
 class StateObserver;
 
-struct CircadianRythmExample {
+struct CircadianRhythmExample {
 private:
     static const int endTime = 100;
 public:
@@ -144,4 +144,4 @@ public:
 };
 
 
-#endif //EXAM_CIRCADIANRYTHMEXAMPLE_H
+#endif //EXAM_CIRCADIANRHYTHMEXAMPLE_H

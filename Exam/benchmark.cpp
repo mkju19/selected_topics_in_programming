@@ -4,7 +4,7 @@
 #include "Observers.h"
 #include "benchmark/benchmark.h"
 #include "Examples/SimpleExample.h"
-#include "Examples/CircadianRythmExample.h"
+#include "Examples/CircadianRhythmExample.h"
 #include "Examples/CovidExample.h"
 
 using clk = std::chrono::high_resolution_clock;
@@ -13,7 +13,7 @@ using std::milli;
 
 
 static void BM_Simulation(benchmark::State& state){
-    auto observer = SilentCounter{};
+    auto observer = SilentCounterObserver{};
 
     for (auto _ : state){
         for (auto i = 0; i < 100; i++) {
@@ -23,7 +23,7 @@ static void BM_Simulation(benchmark::State& state){
 }
 
 static void BM_ParallelSimulation(benchmark::State& state){
-    auto observer = SilentCounter{};
+    auto observer = SilentCounterObserver{};
     for (auto _ : state){
             CovidExample::runParallel(observer, 100, state.range());
     }

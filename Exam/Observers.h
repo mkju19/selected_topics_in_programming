@@ -10,7 +10,7 @@
 #include "Include/Simulator/StateObserver.h"
 
 
-class Counter : public StateObserver{
+class CounterObserver : public StateObserver{
     size_t numberOfReactions = 0;
     void observe(const std::vector<std::string>& vec) override{
         numberOfReactions++;
@@ -21,7 +21,7 @@ class Counter : public StateObserver{
     }
 };
 
-class SilentCounter : public StateObserver{
+class SilentCounterObserver : public StateObserver{
     size_t numberOfReactions = 0;
     void observe(const std::vector<std::string>& vec) override{
         numberOfReactions++;
@@ -42,7 +42,7 @@ class CsvObserver : public StateObserver{
 
         for (auto i = 0; i < vec.size(); i++) {
             if (i != vec.size()-1){
-                outfile << vec.at(i) << "; ";
+                outfile << vec.at(i) << ";";
             } else{
                 outfile << vec.at(i) << std::endl;
             }
@@ -114,29 +114,6 @@ public:
         running = false;
         runningParallel = false;
         outfile.close();
-    }
-};
-
-class Printer : public StateObserver {
-    std::vector<std::vector<std::string>> lines;
-
-    static void printVector(const std::vector<std::string> &vec) {
-        for (const auto &item: vec) {
-            std::cout << item << " ; ";
-        }
-        std::cout << std::endl;
-    }
-public:
-    void observe(const std::vector<std::string>& vec) override{
-        lines.push_back(vec);
-    };
-    void stop() override {
-        std::cout<< "STARTS PRINTING" << std::endl;
-        for (const auto &line : lines){
-            printVector(line);
-        }
-        std::cout << "STOP PRINTING" << std::endl;
-        lines.clear();
     }
 };
 
